@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
 import userController from "./controllers/userContorller.js";
 import authController from "./controllers/authController.js";
 
@@ -21,6 +22,12 @@ mongoose
      console.log(`App is listening to port: ${process.env.PORT}`)
    })
 })
+
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    optionsSuccessStatus: 200,
+}))
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
