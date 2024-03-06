@@ -6,6 +6,7 @@ import userController from "./controllers/userContorller.js";
 import authController from "./controllers/authController.js";
 import cartController from "./controllers/cartController.js";
 import productController from "./controllers/productController.js";
+import uploadController from "./controllers/uploadContorller.js";
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -36,4 +37,6 @@ app.use(express.urlencoded({extended: true}));
 app.use('/users', userController);
 app.use('/auth', authController);
 app.use('/carts', cartController);
-app.use('/product', productController)
+app.use('/product', productController);
+app.use('/images', express.static('public/images'));
+app.use('/upload', uploadController);
