@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userController from "./controllers/userContorller.js";
+import authController from "./controllers/authController.js";
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -24,3 +25,4 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use('/users', userController);
+app.use('/auth', authController);
