@@ -9,6 +9,7 @@ import productController from "./controllers/productController.js";
 import uploadController from "./controllers/uploadContorller.js";
 import itemController from "./controllers/itemController.js";
 import employeeController from "./controllers/employeeController.js";
+import orderController from "./controllers/orderController.js";
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -44,3 +45,4 @@ app.use('/images', express.static('public/images'));
 app.use('/upload', uploadController);
 app.use('/item', itemController);
 app.use('/admin', employeeController);
+app.use('/orders', orderController);
