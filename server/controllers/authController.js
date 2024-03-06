@@ -52,6 +52,42 @@ authController.post('/login', async (req, res) => {
     }
 })
 
+//google
+authController.post('/google', async (req, res) => {
+    try {
+       const user = await User.findOne({email: req.body.email})
+        if (user) {
+            const token = jwt.sign({id: user._id}, process.env.JWT_SECRET)
+            const {password, ...others} = user._doc;
+            return res.cookie('access_token', token, {httpOnly: true}).status(200).json({...others, token});
+
+        } else {
+            const generatePassword =
+                Math.random().toString(36).slice(-8) +
+                Math.random().toString(36).slice(-8);
+
+            const hashPassword = await bcrypt.hash(generatePassword, 10);
+            const newUser = await new User({
+                username: req.body.name.split("").join("").toLowerCase() + Math.random().toString(36).slice(-4),
+                email: req.body.email,
+                password: hashPassword,
+                avatar: req.body.photo,
+            });
+
+            await newUser.save();
+            const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
+            const {password, ...others} = newUser._doc;
+            return res.cookie('access_token', token, {httpOnly: true}).status(200).json({...others, token});
+
+        }
+
+
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+})
+
+
 
 
 
