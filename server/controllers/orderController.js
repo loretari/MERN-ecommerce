@@ -1,6 +1,6 @@
 import express from "express";
 import { Order } from "../models/Order.js";
-import { verifyTokenAuth, verifyTokenAdmin } from "../middlewares/verifyToken.js";
+import { verifyTokenAuth } from "../midlewares/verifyToken.js";
 
 
 const orderController = express.Router();
