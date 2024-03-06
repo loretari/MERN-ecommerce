@@ -10,6 +10,7 @@ import uploadController from "./controllers/uploadContorller.js";
 import itemController from "./controllers/itemController.js";
 import employeeController from "./controllers/employeeController.js";
 import orderController from "./controllers/orderController.js";
+import stripePaymentController from "./controllers/stripePaymentController.js";
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -46,3 +47,6 @@ app.use('/upload', uploadController);
 app.use('/item', itemController);
 app.use('/admin', employeeController);
 app.use('/orders', orderController);
+app.use('/stripe', stripePaymentController);
+
+// server is on port 5001, frontend (client) is on port 3000;
