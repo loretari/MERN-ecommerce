@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import userController from "./controllers/userContorller.js";
 import authController from "./controllers/authController.js";
+import cartController from "./controllers/cartController.js";
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -33,3 +34,4 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use('/users', userController);
 app.use('/auth', authController);
+app.use('/carts', cartController);
