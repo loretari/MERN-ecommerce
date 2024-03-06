@@ -34,7 +34,7 @@ const productController = express.Router();
           await Product.findOneAndDelete(req.params.id)
             return res.status(200).json("Product successfully deleted")
         } catch (error) {
-            return res.status(500).json(error/message)
+            return res.status(500).json(error.message)
         }
     })
 
@@ -70,19 +70,6 @@ const productController = express.Router();
       }
   })
 
-  // get admin (one (only user can see them))
-  productController.get('/find/:id', async (req, res) => {
-      try {
-  const productId = req.params.id;
-  const product = await Product.findById(productId);
-  if (!product) {
-      return  res.status(200).json({message: "No product with such id!"})
-  }
-  return res.status(200).json(product)
-      } catch (error) {
-          return res.status(500).json(error.message)
-      }
-  })
 
 
   // get single product
