@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import userController from "./controllers/userContorller"; // Import dotenv
+import userController from "./controllers/userContorller.js";
 
 dotenv.config(); // Load environment variables from .env file
 
