@@ -1,8 +1,9 @@
 import React, { useState, useEffect} from "react";
 import "./navbar.css";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
 import {logout} from "../../redux/userSlice";
+import { FaSearch } from "react-icons/fa";
 
 
 const Navbar = () => {
@@ -21,6 +22,31 @@ const Navbar = () => {
 
    const navigate = useNavigate();
 
+    const [searchItem, setSearchItem] = useState('');
+    const location = useLocation();
+
+
+
+    window.onscroll = () => {
+        setIsScrolled(window.pageXOffset === 0? false : true)
+        return () => (window.onscroll = null);
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('searchItem', searchItem);
+        const searchQuery = urlParams.toString();
+        navigate(`/search?${searchQuery}`);
+    };
+    useEffect(() => {
+        const urlParams = new URLSearchParams(location.search);
+        const searchItemFromUrl = urlParams.get('searchItem');
+        if (searchItemFromUrl) {
+            setSearchItem(searchItemFromUrl);
+        }
+    }, [location.search]);
+
+    console.log("user", currentUser)
 
     const handleLogout = (e) => {
         e.preventDefault()
@@ -40,6 +66,19 @@ const Navbar = () => {
                          LorDesIgn
                     </Link>
                 </div>
+
+                <form className= "navbar-search"
+                      onSubmit ={handleSubmit }
+                >
+                    <input
+                        type='text'
+                        placeholder='Search...'
+                        value={searchItem}
+                        onChange={(e) => setSearchItem(e.target.value)}
+                    />
+                    <FaSearch className='navbar-searchButton' />
+                </form>
+
                 <div >
                     {currentUser ? (
                         <div className= "navbar-right">
