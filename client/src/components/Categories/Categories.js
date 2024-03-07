@@ -1,8 +1,15 @@
 import React from "react";
+import { categories } from "../../dummydata";
+import Category from "./Category";
+
 
 const Categories = () => {
     return(
-        <div>Categories</div>
+        <div className= "categories-container">
+            {categories.map(item => (
+                <Category item = {item.id}/>
+            ))}
+            </div>
     )
 }
 
