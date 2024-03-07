@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./products.css";
 import {useLocation} from "react-router";
 import axios from "axios";
+import Product from "../Product/Product";
 
 const Products = ({ cat, sort }) => {
 
@@ -12,7 +13,7 @@ const Products = ({ cat, sort }) => {
    useEffect(() => {
         const getProducts = async () => {
             try {
-                const res = await axios.get(`http://localhost:5001/products?category=${category}`)
+     const res = await axios.get(`http://localhost:5001/products?category=${category}`)
                 if (res.ok) {
                     const data = await res.json();
                     if (data.length !==0) {
@@ -22,8 +23,9 @@ const Products = ({ cat, sort }) => {
                     }
                     setProducts(data);
                 } else {
-                    console.error("Failed to fetch itemsL", res.statusText);
+                    console.error("Failed to fetch items:", res.statusText);
                 }
+                setProducts(res.data);
             } catch (error) {
                 console.error('Axios error config:', error.config);
             }
@@ -44,7 +46,7 @@ const Products = ({ cat, sort }) => {
     return (
           <div className= "products-container">
               {products.map((item) => (
-                  <div>item = {item} key = {item.id}</div>
+                  <Product item = {item} key = {item.id}/>
               ))}
           </div>
     )

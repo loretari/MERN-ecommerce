@@ -41,7 +41,7 @@ app.use(express.urlencoded({extended: true}));
 app.use('/users', userController);
 app.use('/auth', authController);
 app.use('/carts', cartController);
-app.use('/product', productController);
+app.use('/products', productController);
 app.use('/images', express.static('public/images'));
 app.use('/upload', uploadController);
 app.use('/item', itemController);
