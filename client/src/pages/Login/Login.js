@@ -3,6 +3,7 @@ import "./login.css";
 import {Link, useNavigate} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {loginSuccess} from "../../redux/userSlice";
+import OAuth from "../../components/OAuth/OAuth";
 
 const Login = () => {
 
@@ -60,6 +61,7 @@ const Login = () => {
                            onChange={(e) => setPassword(e.target.value)}
                     />
                     <button className= "login-button" >LOGIN</button>
+                    <OAuth/>
                     {error ?  <div className= "login-error">
                         Wrong username or password!
                     </div> : null}
