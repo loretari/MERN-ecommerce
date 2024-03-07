@@ -6,6 +6,7 @@ import {ToastContainer} from "react-toastify";
 import {Routes} from "react-router";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import Cart from "./pages/Cart/Cart";
 
 
 
@@ -17,7 +18,7 @@ function App() {
           <Route index path= "/" element= {<Homepage/>}/>
           <Route path= "/login" element= {<Login />}/>
           <Route path= "/register" element={<Register/>}/>
-          <Route path= "/cart"  />
+          <Route path= "/cart"  element={<Cart/>}/>
         </Routes>
       </BrowserRouter>
 
