@@ -31,8 +31,24 @@ const initialState = {
                state.token = action.payload.token;
            },
 
+           adminLoginStart: ( state ) => {
+               state.isFetching = true;
+           },
+           adminLoginSuccess: (state, action) => {
+               state.isFetching = false;
+               state.currentUser = action.payload;
+               state.token = action.payload.token;
+           },
+           adminLoginFailure: (state) => {
+               state.isFetching = false;
+               state.error = true;
+               state.currentUser = null; // Set currentUser to null on login failure
+               state.token = null; // Set token to null on login failure
+           }
+
+
        }
    })
 
-export const { loginStart, loginSuccess, loginFailure, logout, register } = userSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logout, register, adminLoginSuccess, adminLoginFailure, adminLoginStart } = userSlice.actions;
 export default userSlice.reducer;

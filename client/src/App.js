@@ -10,6 +10,7 @@ import ProductList from "./pages/ProductList/ProductList";
 import Product from "./pages/Product/Product";
 import "react-toastify/dist/ReactToastify.css";
 import Success from "./pages/Success";
+import AdminLogin from "./admin/pages/adminLogin/AdminLogin";
 
 
 
@@ -26,6 +27,7 @@ function App() {
             <Route path= "/register" element={<Register/>}/>
             <Route path= "/cart"  element={<Cart/>}/>
             <Route path= "/success" element={<Success/>}/>
+            <Route path= "/admin" element={<AdminLogin/>}/>
 
 
             {/* no match route */}

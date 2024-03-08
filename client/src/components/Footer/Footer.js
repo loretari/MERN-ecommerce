@@ -40,30 +40,30 @@ const Footer = () => {
                     <h3>Useful Links</h3>
                 </div>
                 <ul className= "footer-list">
-                    {/*<Link className= "footer-item"*/}
-                    {/*      to= "/admin"*/}
-                    {/*>*/}
-                    {/*    <li className= "footer-listItem">Admin Portal</li>*/}
-                    {/*</Link>*/}
-                    {/*<Link className= "footer-item"*/}
-                    {/*      to= "/cart"*/}
-                    {/*>*/}
-                    {/*    <li className= "footer-listItem">Cart</li>*/}
-                    {/*</Link>*/}
+                    <Link className= "footer-item"
+                          to= "/admin"
+                    >
+                        <li className= "footer-listItem">Admin Portal</li>
+                    </Link>
+                    <Link className= "footer-item"
+                          to= "/cart"
+                    >
+                        <li className= "footer-listItem">Cart</li>
+                    </Link>
                     <li className= "footer-item">My Account</li>
                     <li className= "footer-item">Order Tracking</li>
                     <li className= "footer-item">Wishlist</li>
                     <li className= "footer-item">Terms</li>
-                    {/*<Link className= "hospo"*/}
-                    {/*      to= "/hospo"*/}
-                    {/*>*/}
-                    {/*    <div className= "footer-listItem">Hospo Deals</div>*/}
-                    {/*</Link>*/}
-                    {/*<Link className= "hospo"*/}
-                    {/*      to= "/functions"*/}
-                    {/*>*/}
-                    {/*    <div className= "footer-listItem">Functions</div>*/}
-                    {/*</Link>*/}
+                    <Link className= "hospo"
+                          to= "/hospo"
+                    >
+                        <div className= "footer-listItem">Hospo Deals</div>
+                    </Link>
+                    <Link className= "hospo"
+                          to= "/functions"
+                    >
+                        <div className= "footer-listItem">Functions</div>
+                    </Link>
                 </ul>
             </div>
 

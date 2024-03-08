@@ -93,9 +93,6 @@ const Navbar = () => {
                                     alt= "profile"/>
 
                             </Link>
-                            <Link className= "navbar-item"
-                                  onClick = {() => window.scrollTo(0, 0)}
-                                  to= '/create'>CREATE</Link>
                             <Link to= "/cart">
                                 <div className= "navbar-item">
                       <span className="MuiBadge-root css-1c32n2y-MuiBadge-root"><svg
