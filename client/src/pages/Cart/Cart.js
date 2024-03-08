@@ -13,7 +13,6 @@ const Cart = () => {
 
     const stripePKey = "pk_test_51KtMKTKEPl7cx7LLlNeT4ue0O4TTFPRVjhIr5T5Hu7WCK7MYlBx6b4y4esCNs04nym36jIDEmqDTz2c1GVitaWeN009SFpfAkB"
 
-
     const cart = useSelector((state) => state.cart);
     const user  = useSelector((state) => state.user.currentUser);
 
@@ -25,6 +24,8 @@ const Cart = () => {
     const onToken = (token) => {
         setStripeToken(token);
     }
+
+
 
    useEffect(() => {
        const paymentRequest = async () => {
@@ -137,7 +138,7 @@ console.log(stripeToken)
 
                                 <div className= "cart-summaryItemTotal" type="total">
                                     <span>Total</span>
-                                    <span>$ {cart.total }.00</span>
+                                    <span>$ {cart.total}.00</span>
                                 </div>
 
                                 {user? (
