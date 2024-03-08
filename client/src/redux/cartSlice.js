@@ -13,17 +13,22 @@ export const cartSlice = createSlice({
     reducers: {
          addProduct: (state, action) => {
              state.quantity += 1;
+             localStorage.setItem('cart', state.quantity)
+
              state.products.push(action.payload);
              state.total += action.payload.price * action.payload.quantity;
              toast.success(`${action.payload.quantity} ${action.payload.title} added to cart!`, {
                  position: "bottom-left"
              });
+             localStorage.setItem("cartItems", JSON.stringify(state.products));
+
          },
 
         cartEnd: (state, action) => {
              state.products = [];
              state.quantity = 0;
-             state.total = 0;
+            localStorage.removeItem(('cart'));
+            state.total = 0;
         },
 
         removeProduct: (state, action) => {

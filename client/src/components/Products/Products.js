@@ -4,7 +4,7 @@ import {useLocation} from "react-router";
 import axios from "axios";
 import Product from "../Product/Product";
 
-const Products = ({ cat, sort }) => {
+const Products = ({cat, sort}) => {
 
      const [products, setProducts] = useState([]);
      const category = useLocation().pathname.split("/")[2];
@@ -14,18 +14,16 @@ const Products = ({ cat, sort }) => {
         const getProducts = async () => {
             try {
      const res = await axios.get(`http://localhost:5001/products?category=${category}`)
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.length !==0) {
+                if (res.status === 200) {
+                    const data = res.data;
+                    if (data.length !== 0) {
                         setProducts(data);
                     } else {
                         console.warn("No items found for category:", cat);
                     }
-                    setProducts(data);
                 } else {
                     console.error("Failed to fetch items:", res.statusText);
                 }
-                setProducts(res.data);
             } catch (error) {
                 console.error('Axios error config:', error.config);
             }
@@ -44,11 +42,12 @@ const Products = ({ cat, sort }) => {
    }, [sort]);
 
     return (
-          <div className= "products-container">
-              {products.map((item) => (
-                  <Product item = {item} key = {item.id}/>
-              ))}
-          </div>
+        <div className= "products-container">
+            {products.map((item) => (
+
+                <Product item={item} key = {item.id}/>
+            ))}
+        </div>
     )
 }
 

@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+dotenv.config(); // Load environment variables from .env file
 import cors from "cors";
 import userController from "./controllers/userContorller.js";
 import authController from "./controllers/authController.js";
@@ -12,8 +13,6 @@ import employeeController from "./controllers/employeeController.js";
 import orderController from "./controllers/orderController.js";
 import stripePaymentController from "./controllers/stripePaymentController.js";
 
-dotenv.config(); // Load environment variables from .env file
-
 
 const app = express();
 
@@ -23,12 +22,11 @@ mongoose.set('strictQuery', false);
 mongoose
     .connect(process.env.MONGO_URL)
     .then(() => {
-   console.log("DB is successfully connected");
-
-   app.listen(process.env.PORT, () => {
-     console.log(`App is listening to port: ${process.env.PORT}`)
-   })
-})
+        console.log("DB is successfully connected");
+        app.listen(process.env.PORT, () => {
+            console.log(`App is listening to port: ${process.env.PORT}`)
+        })
+    })
 
 app.use(cors({
     origin: "http://localhost:3000",

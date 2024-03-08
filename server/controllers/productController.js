@@ -5,7 +5,7 @@ import { verifyToken } from "../midlewares/verifyToken.js";
 const productController = express.Router();
 
    //create a new product (admin)
-   productController.post('/', async (req, res) => {
+   productController.post("/", async (req, res) => {
        const product = await Product(req.body);
 
        try {
@@ -21,7 +21,7 @@ const productController = express.Router();
   productController.put('/:id', async (req, res) => {
       try {
           const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, {new: true});
-          return res.stat(200).json(updatedProduct);
+          return res.status(200).json(updatedProduct);
 
       } catch (error) {
           return res.status(500).json(error.message)
@@ -40,9 +40,8 @@ const productController = express.Router();
 
   // get all products (everybody can see them)
   productController.get('/', async (req, res) => {
-      try {
       const queryCat = req.query.category
-
+      try {
           let products
           if (queryCat) {
               // check if the product's categories are inside the query we pass
@@ -75,12 +74,27 @@ const productController = express.Router();
   // get single product
   productController.get('/find/:id', async (req, res) => {
       try {
-          const product = await Product(req.params.id);
-          return res.status(200).json(product)
+          const product = await Product.findById(req.params.id);
+          return res.status(200).json(product);
 
       } catch (error) {
           return res.status(500).json(error.message)
       }
+})
+
+
+// get admin (one (only register user can see them))
+productController.get('/find/:id', verifyToken, async  (req, res) => {
+    try {
+        const productId = req.params.id;
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(200).json({ msg: "No product with such id!" })
+        }
+        return res.status(200).json(product)
+    } catch (error)  {
+        console.log(error)
+    }
 })
 
 

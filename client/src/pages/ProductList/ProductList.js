@@ -31,8 +31,9 @@ const ProductList = () => {
                         <span> Sort Products:</span>
                     </div>
                     <select className= "shop-select"
+                            value={sort}
                             onChange={(e) => setSort(e.target.value)} >
-                        <option value= "newest" selected>Newest</option>
+                        <option value= "newest">Newest</option>
                         <option value = "acs">Price (asc)</option>
                         <option value= "desc">Price (desc)</option>
                     </select>
