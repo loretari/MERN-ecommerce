@@ -1,11 +1,24 @@
-import React from "react";
+import React, {useState} from "react";
 import "./adminContainer.css";
+import Home from "../home/Home";
 
 const AdminContainer = () => {
 
+    const [currentPage, setCurrentPage] = useState('Home');
+
+    const renderPage = () => {
+        if (currentPage === 'Home') {
+            return <Home/>
+        }
+    };
+
+    const handlePageChange = (page) => setCurrentPage(page);
 
     return (
-        <div>Navbar</div>
+        <div>
+            <div currentPage = { currentPage } hanndlePageChange = { handlePageChange }>
+                { renderPage() }</div>
+        </div>
     )
 }
 

@@ -1,0 +1,35 @@
+.container {
+    /*display: flex;*/
+    flex-wrap: wrap;
+
+}
+
+.homeContainer {
+    display: flex;
+    margin: 30px;
+
+}
+
+.containerLeft {
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    padding: 20px;
+    flex: 20%;
+}
+.containerRight{
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    padding: 20px;
+    flex: 30%;
+}
+
+.containerWelcome {
+    margin: 20px;
+}
+
+
+.containerCenter {
+    /*flex: 1;*/
+    padding: 20px;
+    flex: 50%;
+}
