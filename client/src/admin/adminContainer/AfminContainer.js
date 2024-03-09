@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import "./adminContainer.css";
 import Home from "../home/Home";
+import AdminProducts from "../adminProducts/AdminProducts";
 
 const AdminContainer = () => {
 
@@ -9,6 +10,9 @@ const AdminContainer = () => {
     const renderPage = () => {
         if (currentPage === 'Home') {
             return <Home/>
+        }
+        if (currentPage === 'AdminProducts') {
+          return <AdminProducts/>
         }
     };
 

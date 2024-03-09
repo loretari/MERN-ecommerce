@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Success from "./pages/Success";
 import AdminLogin from "./admin/pages/adminLogin/AdminLogin";
 import AdminHome from "./admin/pages/adminHome/AdminHome";
+import AdminProduct from "./admin/adminProduct/AdminProduct";
 
 
 
@@ -30,6 +31,7 @@ function App() {
             <Route path= "/success" element={<Success/>}/>
             <Route path= "/admin" element={<AdminLogin/>}/>
             <Route path= "/admin/home" element={<AdminHome/>}/>
+            <Route path= "/admin/product/:id" element={<AdminProduct/>}/>
 
 
             {/* no match route */}
