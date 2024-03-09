@@ -18,7 +18,7 @@ const AdminLogin = () => {
         e.preventDefault();
 
         try {
-            const res = await fetch(`http://localhost: 5001/auth/login`, {
+            const res = await fetch(`http://localhost:5001/auth/login`, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -29,7 +29,7 @@ const AdminLogin = () => {
                 const data = await res.json();
                 console.log(data);
                 dispatch(adminLoginSuccess(data))
-                navigate("/admin/home")
+                navigate("/admin/home");
             } else {
                 throw new Error("Authentication failed")
             }
@@ -37,7 +37,7 @@ const AdminLogin = () => {
 
         } catch (error) {
             setTimeout(() => {
-                setError(true)
+                // setError(true)
             }, 3000)
         }
 
