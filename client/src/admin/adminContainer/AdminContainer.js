@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import "./adminContainer.css";
 import Home from "../home/Home";
 import AdminProducts from "../adminProducts/AdminProducts";
+import AdminNavbar from "../adminNavbar/AdminNavbar";
 
 const AdminContainer = () => {
 
@@ -20,8 +21,8 @@ const AdminContainer = () => {
 
     return (
         <div>
-            <div currentPage = { currentPage } hanndlePageChange = { handlePageChange }>
-                { renderPage() }</div>
+            <AdminNavbar currentPage = { currentPage } handlePageChange = { handlePageChange }/>
+                { renderPage() }
         </div>
     )
 }

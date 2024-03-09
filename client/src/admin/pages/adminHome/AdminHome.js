@@ -1,6 +1,6 @@
 import React from "react";
 import "./adminHome.css";
-import AdminContainer from "../../adminContainer/AfminContainer";
+import AdminContainer from "../../adminContainer/AdminContainer";
 
 const AdminHome = () => {
 
