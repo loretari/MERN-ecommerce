@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import { app } from "../../firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {updateProductSuccess} from "../../redux/productSlice";
+import axios from "axios";
 
 
 
@@ -25,61 +26,83 @@ const AdminProduct = () => {
     }
 
     const handleChange = (e) => {
-       setProduct (prev => {
-           return {...prev, [e.target.name] : e.target.value}
-       })
+        if (img !== null) {
+            setProduct (prev => {
+                return {...prev, [e.target.name] : e.target.value}
+            })
+        } else {
+            console.error("Image is null")
+        }
+
     }
 
     const handleCategories = (e) => {
        setCategory (e.target.value.split(','));
     }
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault()
 
-            //give the image an unique name
-            const imageName = new Date().getTime() + img.name
-            const storage = getStorage(app)
-            const StorageRef = ref(storage, imageName)
-            const uploadTask = uploadBytesResumable(StorageRef, img);
+        const formData = new FormData();
+        formData.append('productImage', img);
+        formData.append('productName', product.name);
 
-            //Firebase to manage the photo upload
-            // Register three observers:
-            // 1. 'state_changed' observer, called any time the state changes
-            // 2. Error observer, called on failure
-            // 3. Completion observer, called on successful completion
-            uploadTask.on('state_changed',
-                (snapshot) => {
-                    // Observe state change events such as progress, pause, and resume
-                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    //console.log('Upload is ' + progress + '% done');
-                    switch (snapshot.state) {
-                        case 'paused':
-                            // console.log('Upload is paused');
-                            break;
-                        case 'running':
-                            //console.log('Upload is running');
-                            break;
-                        default:
-                    }
-                },
-                (error) => {
-                    // Handle unsuccessful uploads
-                },
-                () => {
-                    // Handle successful uploads on complete
-                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        //new product data
-                        console.log({...product, image:downloadURL, categories:category});
-                        const newProduct = { ...product, image: downloadURL, categories: category }
-                        //console.log(newProduct)
-                        dispatch(updateProductSuccess (newProduct))
-                        window.location.assign('/admin/home')
-                    });
+
+
+        try {
+            const response = await axios.post("http://localhost:5001/upload/image", formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
                 }
-            );
+            });
+            console.log("Image upload", response.data);
+        } catch (error) {
+            console.error(error)
+        }
+
+            // //give the image an unique name
+            // const imageName = new Date().getTime() + img.name
+            // const storage = getStorage(app)
+            // const StorageRef = ref(storage, imageName)
+            // const uploadTask = uploadBytesResumable(StorageRef, img);
+            //
+            // //Firebase to manage the photo upload
+            // // Register three observers:
+            // // 1. 'state_changed' observer, called any time the state changes
+            // // 2. Error observer, called on failure
+            // // 3. Completion observer, called on successful completion
+            // uploadTask.on('state_changed',
+            //     (snapshot) => {
+            //         // Observe state change events such as progress, pause, and resume
+            //         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            //         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            //         //console.log('Upload is ' + progress + '% done');
+            //         switch (snapshot.state) {
+            //             case 'paused':
+            //                 // console.log('Upload is paused');
+            //                 break;
+            //             case 'running':
+            //                 //console.log('Upload is running');
+            //                 break;
+            //             default:
+            //         }
+            //     },
+            //     (error) => {
+            //         // Handle unsuccessful uploads
+            //     },
+            //     () => {
+            //         // Handle successful uploads on complete
+            //         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            //         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            //             //new product data
+            //             console.log({...product, image:downloadURL, categories:category});
+            //             const newProduct = { ...product, image: downloadURL, categories: category }
+            //             //console.log(newProduct)
+            //             dispatch(updateProductSuccess (newProduct))
+            //             window.location.assign('/admin/home')
+            //         });
+            //     }
+            // );
 
     }
 

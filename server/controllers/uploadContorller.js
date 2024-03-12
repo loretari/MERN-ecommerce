@@ -18,7 +18,10 @@ const upload = multer({
 
 })
 
-uploadController.post('/image', upload.single('product'), (req, res) => {
+uploadController.post('/image', upload.single('productImage'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({error: "No file uploaded"})
+    }
     res.json({
         success: 1,
         image_url: `http://localhost:${process.env.PORT}/images/${req.file.filename}`
