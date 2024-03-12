@@ -35,63 +35,67 @@ const AdminProducts = () => {
 
 
     useEffect(() => {
-         dispatch (getProductSuccess())
+         dispatch (getProductSuccess)
      }, [dispatch]);
+    if (!products) {
+        return <div>Loading ...</div>
+    }
+    const columns = [
+        {
+            field: "_id", headerName: "ID", width: 100
+        },
+        {
+            field: "product",
+            headerName: "Product",
+            width: 200,
+            renderCell: (params) => {
+                return (
+                    <div className="productListItem">
+                        <img className="productListImg" src={params.row.image} alt="" />
+                        {params.row.title}
+                    </div>
+                );
+            },
+        },
+        {
+            field: "inStock",
+            headerName: "Stock",
+            width: 200,
+        },
+
+        {
+            field: "price",
+            headerName: "Price",
+            width: 200,
+        },
+
+
+        {
+            field: "action",
+            headerName: "Action",
+            width: 150,
+            renderCell: (params) => {
+                return (
+                    <>
+                        <Link to= {"/admin/product/" + params.row._id}>
+                            <button className="productListEdit">Edit</button>
+                        </Link>
+                        <DeleteOutlineOutlinedIcon
+                            className="productListDelete"
+                            onClick={() => handleDelete(params.row._id)}
+                        />
+                    </>
+                );
+            },
+        },
+
+    ]
 
      const handleDelete = (id) => {
          dispatch (deleteProductSuccess (id));
      }
 
-     const columns = [
-         {
-             field: "_id", headerName: "ID", width: 100
-         },
-         {
-             field: "product",
-             headerName: "Product",
-             width: 200,
-             renderCell: (params) => {
-                 return (
-                     <div className="productListItem">
-                         <img className="productListImg" src={params.row.image} alt="" />
-                         {params.row.title}
-                     </div>
-                 );
-             },
-         },
-         {
-             field: "inStock",
-             headerName: "Stock",
-             width: 200,
-         },
 
-         {
-             field: "price",
-             headerName: "Price",
-             width: 200,
-         },
-
-
-         {
-             field: "action",
-             headerName: "Action",
-             width: 150,
-             renderCell: (params) => {
-                 return (
-                     <>
-                         <Link to= {"/admin/product/" + params.row._id}>
-                             <button className="productListEdit">Edit</button>
-                         </Link>
-                         <DeleteOutlineOutlinedIcon
-                             className="productListDelete"
-                             onClick={() => handleDelete(params.row._id)}
-                         />
-                     </>
-                 );
-             },
-         },
-
-     ]
 
     return (
         <div className= "creatNewProduct">
