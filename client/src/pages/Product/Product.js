@@ -5,9 +5,10 @@ import Navbar from "../../components/Navbar/Navbar";
 import NewsLetter from "../../components/Newsletter/Newsletter";
 import Footer from "../../components/Footer/Footer";
 import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import {addProduct} from "../../redux/cartSlice";
+import {addProductSuccess, getProductSuccess} from "../../redux/productSlice";
 
 
 const Product = () => {
@@ -15,7 +16,8 @@ const Product = () => {
     const location = useLocation();
     const id = location.pathname.split("/")[2];
 
-    const [product, setProduct] = useState({});
+    // const [product, setProduct] = useState({});
+    const product = useSelector((state) => state.product.products);
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
 
@@ -24,13 +26,22 @@ const Product = () => {
            const getProduct = async () => {
         try {
             const res = await axios.get(`http://localhost:5001/products/find/`+ id)
-             setProduct(res.data);
+            console.log("Response:", res);
+            console.log("Response data:", res.data);
+
+            // setProduct(res.data);
+            dispatch (getProductSuccess(res.data));
         } catch (error) {
             console.error(error)
         }
         }
+
    getProduct()
+        console.log("Product get", id)
     }, [id]);
+
+
+
 
 
     // handling quantity to put in the cart
@@ -48,6 +59,7 @@ const Product = () => {
         dispatch(addProduct({...product, quantity}))
     }
 
+
     return (
         <div>
             <Navbar />
@@ -58,10 +70,14 @@ const Product = () => {
          </div>
             <div className= "product-wrapper">
                 <div className= "product-imgContainer">
-                    <img src={product.image} className= "productPage-image" alt= "product"/>
+                    {product && product.image && (
+                        <img src={product.image} className="productPage-image" alt="product" />
+                    )}
+                    {/*<img src={product.image} className= "productPage-image" alt= "product"/>*/}
                 </div>
                 <div className= "product-infoContainer">
-                    <h1>{product.title}</h1>
+                    <h1>{product && product.title}</h1>
+                    {/*<h1>{product.title}</h1>*/}
                     <p className= "product-desc">{product.description}</p>
                     <div className= "product-price">
                         <span>$ {product.price}</span>

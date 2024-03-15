@@ -5,11 +5,13 @@ import { verifyToken } from "../midlewares/verifyToken.js";
 const productController = express.Router();
 
    //create a new product (admin)
-   productController.post("/", async (req, res) => {
-       const product = await Product(req.body);
 
+
+   productController.post("/", async (req, res) => {
+       // const product = await Product(req.body);
        try {
-        const newProduct = await product.save();
+           const newProduct = await Product.create(req.body);
+        // const newProduct = await product.save();
         return res.status(200).json(newProduct);
 
        } catch (error) {
@@ -69,22 +71,8 @@ const productController = express.Router();
       }
   })
 
-
-
-  // get single product
-  productController.get('/find/:id', async (req, res) => {
-      try {
-          const product = await Product.findById(req.params.id);
-          return res.status(200).json(product);
-
-      } catch (error) {
-          return res.status(500).json(error.message)
-      }
-})
-
-
 // get admin (one (only register user can see them))
-productController.get('/find/:id', verifyToken, async  (req, res) => {
+productController.get('user/find/:id', verifyToken, async  (req, res) => {
     try {
         const productId = req.params.id;
         const product = await Product.findById(productId);
@@ -96,6 +84,23 @@ productController.get('/find/:id', verifyToken, async  (req, res) => {
         console.log(error)
     }
 })
+
+  // get single product
+  productController.get('/find/:id', async (req, res) => {
+      try {
+
+          const product = await Product.findById(req.params.id);
+          if (!product) {
+              return res.status(404).json({error: "Product not found"});
+          }
+          return res.status(200).json(product);
+      } catch (error) {
+          return res.status(500).json({ error: error.message });
+      }
+})
+
+
+
 
 
  // get admin

@@ -6,14 +6,14 @@ import Product from "../Product/Product";
 
 const Products = ({cat, sort}) => {
 
-     const [products, setProducts] = useState([]);
-     const category = useLocation().pathname.split("/")[2];
+    const [products, setProducts] = useState([]);
+    const category = useLocation().pathname.split("/")[2];
 
     //get products, if there is a category retrieves only few of them otherwise all of them
-   useEffect(() => {
+    useEffect(() => {
         const getProducts = async () => {
             try {
-     const res = await axios.get(`http://localhost:5001/products?category=${category}`)
+                const res = await axios.get(`http://localhost:5001/products?category=${category}`)
                 if (res.status === 200) {
                     const data = res.data;
                     if (data.length !== 0) {
@@ -28,18 +28,18 @@ const Products = ({cat, sort}) => {
                 console.error('Axios error config:', error.config);
             }
         }
-         getProducts();
-   }, [cat, category]);
+        getProducts();
+    }, [cat, category]);
 
-   useEffect(() => {
-       if (sort === "") {
-           setProducts(prev => [...prev].sort((a, b) => a.createdAt - b.createdAt))
-       } else if (sort === "asc"){
-           setProducts(prev => [...prev].sort((a, b) => a.price - b.price))
-           } else {
-              setProducts(prev => [...prev].sort((a, b) => b.price - a.price))
-}
-   }, [sort]);
+    useEffect(() => {
+        if (sort === "") {
+            setProducts(prev => [...prev].sort((a, b) => a.createdAt - b.createdAt))
+        } else if (sort === "asc"){
+            setProducts(prev => [...prev].sort((a, b) => a.price - b.price))
+        } else {
+            setProducts(prev => [...prev].sort((a, b) => b.price - a.price))
+        }
+    }, [sort]);
 
     return (
         <div className= "products-container">

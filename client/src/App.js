@@ -13,6 +13,7 @@ import Success from "./pages/Success";
 import AdminLogin from "./admin/pages/adminLogin/AdminLogin";
 import AdminHome from "./admin/pages/adminHome/AdminHome";
 import AdminProduct from "./admin/adminProduct/AdminProduct";
+import NewProduct from "./admin/newProduct/NewProduct";
 
 
 
@@ -32,6 +33,7 @@ function App() {
             <Route path= "/admin" element={<AdminLogin/>}/>
             <Route path= "/admin/home" element={<AdminHome/>}/>
             <Route path= "/admin/product/:id" element={<AdminProduct/>}/>
+            <Route path= "/newProduct" element={<NewProduct/>} />
 
 
             {/* no match route */}

@@ -1,10 +1,7 @@
 import mongoose from "mongoose";
 
 const ProductSchema = new mongoose.Schema({
-        id: {
-            type: Number,
-            required: true,
-        },
+
         title: {
             type: String,
             required: true,
@@ -28,6 +25,7 @@ const ProductSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
+
         inStock: {
             type: Boolean,
             default: true,

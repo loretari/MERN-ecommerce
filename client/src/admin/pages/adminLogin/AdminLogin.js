@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import "./adminLogin.css";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {adminLoginSuccess} from "../../../redux/userSlice";
 import {useNavigate} from "react-router";
 
@@ -10,6 +10,9 @@ const AdminLogin = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
+
+    const { token } = useSelector((state) => state.user);
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -21,6 +24,7 @@ const AdminLogin = () => {
             const res = await fetch(`http://localhost:5001/auth/login`, {
                 headers: {
                     'Content-Type': 'application/json'
+
                 },
                 method: "POST",
                 body: JSON.stringify({username: username, email: email, password: password})

@@ -24,6 +24,7 @@ const initialState = {
            },
            logout: (state) => {
                state.currentUser = null;
+               state.token = null;
            },
            register: (state, action) => {
                state.isFetching = false;

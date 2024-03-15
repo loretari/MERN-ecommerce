@@ -14,6 +14,9 @@ import orderController from "./controllers/orderController.js";
 import stripePaymentController from "./controllers/stripePaymentController.js";
 
 
+
+
+
 const app = express();
 
 // connect db
@@ -46,5 +49,8 @@ app.use('/item', itemController);
 app.use('/admin', employeeController);
 app.use('/orders', orderController);
 app.use('/stripe', stripePaymentController);
+
+
+
 
 // server is on port 5001, frontend (client) is on port 3000;

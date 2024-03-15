@@ -32,9 +32,11 @@ export const productSlice = createSlice({
         deleteProductSuccess: (state, action) => {
             state.isFetching = false
             // remove the product whose id matches with our specific product
-            state.products.splice(
-                state.products.findIndex((item) => item._id === action.payload),1
-            )
+            state.products = state.products.filter((item) => item._id !== action.payload)
+
+            // state.products.splice(
+            //     state.products.findIndex((item) => item._id === action.payload),1
+            // )
         },
         deleteProductFailure: (state) => {
             state.isFetching = false
@@ -63,7 +65,8 @@ export const productSlice = createSlice({
         },
         addProductSuccess: (state, action) => {
             state.isFetching = false
-            state.products.push(action.payload)
+            state.products = state.products.concat(action.payload);
+            // state.products.push(action.payload)
 
         },
         addProductFailure: (state) => {
