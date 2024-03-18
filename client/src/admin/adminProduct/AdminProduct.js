@@ -1,10 +1,8 @@
 import React, {useState} from "react";
 import "./adminProduct.css";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import { app } from "../../firebase";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import {updateProductSuccess} from "../../redux/productSlice";
+import { updateProductSuccess} from "../../redux/productSlice";
 import axios from "axios";
 
 
@@ -15,96 +13,69 @@ const AdminProduct = () => {
     const productId = location.pathname.split('/')[3];
     const updatedProduct = useSelector((state) => state.product.products.find(product => product._id === productId));
 
-    const [product, setProduct] = useState(updatedProduct);
-    const [category, setCategory] = useState([]);
-    const [img, setImg] = useState(null);
+
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [categories, setCategories] = useState("");
+    const [price, setPrice] = useState("");
+    const [image, setImage] = useState("");
+    const [inStock, setInStock] = useState(true);
+
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleBack = () => {
         window.location.assign('/admin/home');
     }
 
-    const handleChange = (e) => {
-        if (img !== null) {
-            setProduct (prev => {
-                return {...prev, [e.target.name] : e.target.value}
-            })
-        } else {
-            console.error("Image is null")
-        }
 
-    }
-
-    const handleCategories = (e) => {
-       setCategory (e.target.value.split(','));
-    }
 
     const handleClick = async (e) => {
         e.preventDefault()
 
-        const formData = new FormData();
-        formData.append('productImage', img);
-        formData.append('productName', product.name);
+            try {
 
+                const formData = new FormData();
+                formData.append("image", image);
+                formData.append("title", title);
+                formData.append("description", description);
+                formData.append("categories", categories);
+                formData.append("price", price);
+                formData.append("inStock", inStock);
 
+                const uploadResponse = await axios.post(
+                    "http://localhost:5001/upload/image",
+                    formData
+                );
 
-        try {
-            const response = await axios.post("http://localhost:5001/upload/image", formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+                if (!uploadResponse.data || !uploadResponse.data.image_url) {
+                    throw new Error("Image URL is not provided in the response");
                 }
-            });
-            console.log("Image upload", response.data);
-        } catch (error) {
-            console.error(error)
-        }
 
-            // //give the image an unique name
-            // const imageName = new Date().getTime() + img.name
-            // const storage = getStorage(app)
-            // const StorageRef = ref(storage, imageName)
-            // const uploadTask = uploadBytesResumable(StorageRef, img);
-            //
-            // //Firebase to manage the photo upload
-            // // Register three observers:
-            // // 1. 'state_changed' observer, called any time the state changes
-            // // 2. Error observer, called on failure
-            // // 3. Completion observer, called on successful completion
-            // uploadTask.on('state_changed',
-            //     (snapshot) => {
-            //         // Observe state change events such as progress, pause, and resume
-            //         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            //         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            //         //console.log('Upload is ' + progress + '% done');
-            //         switch (snapshot.state) {
-            //             case 'paused':
-            //                 // console.log('Upload is paused');
-            //                 break;
-            //             case 'running':
-            //                 //console.log('Upload is running');
-            //                 break;
-            //             default:
-            //         }
-            //     },
-            //     (error) => {
-            //         // Handle unsuccessful uploads
-            //     },
-            //     () => {
-            //         // Handle successful uploads on complete
-            //         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            //         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            //             //new product data
-            //             console.log({...product, image:downloadURL, categories:category});
-            //             const newProduct = { ...product, image: downloadURL, categories: category }
-            //             //console.log(newProduct)
-            //             dispatch(updateProductSuccess (newProduct))
-            //             window.location.assign('/admin/home')
-            //         });
-            //     }
-            // );
+                const productData = {
+                    title,
+                    description,
+                    categories,
+                    image: uploadResponse.data.image_url,
+                    price,
+                    inStock,
+                };
 
-    }
+                const response = await axios.post(
+                    "http://localhost:5001/products",
+                    productData
+                );
+
+                const product = response.data;
+
+                dispatch(updateProductSuccess(product));
+
+                navigate(`/product/${product._id}`);
+            } catch (error) {
+                console.error(error.message);
+            }
+        };
 
     return (
         <div className="user">
@@ -160,7 +131,8 @@ const AdminProduct = () => {
                                     name= "title"
                                     type="text"
                                     placeholder=""
-                                    onChange={handleChange}
+                                    value={title}
+                                    onChange= {(e) => setTitle(e.target.value)}
                                     className="userUpdateInput"
                                 />
                             </div>
@@ -170,7 +142,8 @@ const AdminProduct = () => {
                                     name= "description"
                                     type="text"
                                     placeholder=""
-                                    onChange={handleChange}
+                                    onChange= {(e) => setDescription(e.target.value)}
+                                    value={description}
                                     className="userUpdateInput"
                                 />
                             </div>
@@ -179,7 +152,9 @@ const AdminProduct = () => {
                                 <input
                                     type="text"
                                     placeholder=""
-                                    onChange={handleCategories}
+                                    value={categories}
+                                    onChange= {(e) => setCategories(e.target.value)}
+
                                 />
                             </div>
 
@@ -189,15 +164,20 @@ const AdminProduct = () => {
                                     name= "price"
                                     type="number"
                                     placeholder=""
-                                    onChange={handleChange}
+                                    value={price}
+                                    onChange= {(e) => setPrice(e.target.value)}
                                     className="userUpdateInput"
                                 />
                             </div>
                             <div className="userUpdateItem">
                                 <label>In Stock</label>
                                 <select
-                                    name= "inStock" id= "idStock"
-                                    onChange={handleChange}>
+                                    name= "inStock"
+                                    id= "idStock"
+                                    value={inStock}
+                                    onChange= {(e) => setInStock(e.target.value)}
+
+                                >
                                     <option value= "true">Yes</option>
                                     <option value= "false">No</option>
                                 </select>
@@ -206,7 +186,7 @@ const AdminProduct = () => {
                         </div>
                         <div className="userUpdateRight">
                             <div className="userUpdateUpload">
-                                <input type="file" id="file" onChange={ e => setImg(e.target.files[0])}/>
+                                <input type="file" id="file" onChange={ e => setImage(e.target.files[0])}/>
                                 <label htmlFor="file">
 
                                 </label>
