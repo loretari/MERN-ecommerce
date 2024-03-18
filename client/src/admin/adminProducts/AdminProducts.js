@@ -11,7 +11,8 @@ import axios from "axios";
 const AdminProducts = () => {
 
      // const products = useSelector((state) => state.product.products);
-     const [products, setProducts] = useState([]);
+     // const [products, setProducts] = useState([]);
+     const products = useSelector((state) => state.product.products);
 
      const dispatch = useDispatch();
 
@@ -21,17 +22,22 @@ const AdminProducts = () => {
             try {
                 const res = await axios.get(`http://localhost:5001/products/`)
                 if (res.status === 200) {
-                        setProducts(res.data);
-                    } else {
-                        console.error("Failed to fetch items:", res.statusText);
-                    }
-            } catch (error) {
-                console.error('Axios error config:', error);
+                    const data = res.data;
+                    // if (data.length !== 0) {
+                    dispatch(getProductSuccess(data));
+                    // products(res.data);
+                } else {
+                    console.error("Failed to fetch items:", res.statusText);
+                }
+
+            }  catch (error) {
+                    console.error('Axios error config:', error);
+                }
+
             }
 
-        }
         getProducts();
-    }, []);
+    }, [dispatch]);
 
 
     useEffect(() => {

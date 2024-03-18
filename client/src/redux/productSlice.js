@@ -4,6 +4,7 @@ const initialState = {
     products: [],
     isFetching: false,
     error: false,
+    sortBy: ""
 }
 
 export const productSlice = createSlice({
@@ -19,7 +20,7 @@ export const productSlice = createSlice({
             state.isFetching = false;
             state.products = action.payload
         },
-        getProductFailure : (state) => {
+        getProductFailure: (state) => {
             state.isFetching = false;
             state.error = true
         },
@@ -65,22 +66,26 @@ export const productSlice = createSlice({
         },
         addProductSuccess: (state, action) => {
             state.isFetching = false
-            state.products = state.products.concat(action.payload);
+            state.products = [...state.products, action.payload];
             // state.products.push(action.payload)
 
         },
         addProductFailure: (state) => {
             state.isFetching = false
             state.error = true
+        },
+
+
+        // sort products
+        sortProducts: (state, action) => {
+            state.sortBy = action.payload;
         }
-
-    }
-
+    },
 });
 
 export const { getProductSuccess, addProductFailure, addProductStart,
     addProductSuccess, updateProductFailure, updateProductStart,
     updateProductSuccess, deleteProductFailure, deleteProductStart,
-    deleteProductSuccess, getProductFailure, getProductStart } = productSlice.actions;
+    deleteProductSuccess, getProductFailure, getProductStart, sortProducts  } = productSlice.actions;
 
 export default productSlice.reducer;
