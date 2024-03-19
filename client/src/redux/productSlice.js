@@ -33,11 +33,11 @@ export const productSlice = createSlice({
         deleteProductSuccess: (state, action) => {
             state.isFetching = false
             // remove the product whose id matches with our specific product
-            state.products = state.products.filter((item) => item._id !== action.payload)
+            // state.products = state.products.filter((item) => item._id !== action.payload)
 
-            // state.products.splice(
-            //     state.products.findIndex((item) => item._id === action.payload),1
-            // )
+            state.products.splice(
+                state.products.findIndex((item) => item._id === action.payload),1
+            )
         },
         deleteProductFailure: (state) => {
             state.isFetching = false

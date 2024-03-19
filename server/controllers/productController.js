@@ -33,7 +33,7 @@ const productController = express.Router();
      // delete product
     productController.delete('/:id', async (req, res) => {
         try {
-          await Product.findOneAndDelete(req.params.id)
+          await Product.findByIdAndDelete(req.params.id)
             return res.status(200).json("Product successfully deleted")
         } catch (error) {
             return res.status(500).json(error.message)

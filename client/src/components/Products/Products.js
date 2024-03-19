@@ -3,8 +3,8 @@ import "./products.css";
 import {useLocation} from "react-router";
 import axios from "axios";
 import Product from "../Product/Product";
-import {useDispatch} from "react-redux";
-import {sortProducts} from "../../redux/productSlice";
+import {useDispatch, useSelector} from "react-redux";
+import { sortProducts} from "../../redux/productSlice";
 
 
 const Products = ({cat, sort}) => {
@@ -14,7 +14,7 @@ const Products = ({cat, sort}) => {
     const category = useLocation().pathname.split("/")[2];
     const dispatch = useDispatch();
 
-    //get products, if there is a category retrieves only few of them otherwise all of them
+    // get products, if there is a category retrieves only few of them otherwise all of them
     useEffect(() => {
         const getProducts = async () => {
             try {
@@ -35,6 +35,8 @@ const Products = ({cat, sort}) => {
         }
         getProducts();
     }, [cat, category]);
+
+
 
     useEffect(() => {
 

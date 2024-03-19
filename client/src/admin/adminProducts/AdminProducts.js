@@ -4,14 +4,12 @@ import {DataGrid} from "@mui/x-data-grid";
 import {useDispatch, useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import {deleteProductSuccess, getProductSuccess} from "../../redux/productSlice";
+import {deleteProductFailure, deleteProductSuccess, getProductSuccess} from "../../redux/productSlice";
 import axios from "axios";
 
 
 const AdminProducts = () => {
 
-     // const products = useSelector((state) => state.product.products);
-     // const [products, setProducts] = useState([]);
      const products = useSelector((state) => state.product.products);
 
      const dispatch = useDispatch();
@@ -40,9 +38,26 @@ const AdminProducts = () => {
     }, [dispatch]);
 
 
-    useEffect(() => {
-         dispatch (getProductSuccess)
-     }, [dispatch]);
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await axios.delete(`http://localhost:5001/products/${id}`)
+            if (res.status === 200) {
+                console.log("Product successfully deleted")
+                dispatch (deleteProductSuccess(id));
+            } else{
+                console.error("Failed to delete product:", res.statusText);
+                dispatch(deleteProductFailure("Failed to delete product"))
+            }
+
+        } catch (error) {
+            console.error("Failed to delete product:", error.message);
+            dispatch(deleteProductFailure(error))
+
+        }
+
+    }
+
     if (!products) {
         return <div>Loading ...</div>
     }
@@ -96,10 +111,6 @@ const AdminProducts = () => {
         },
 
     ]
-
-     const handleDelete = (id) => {
-         dispatch (deleteProductSuccess (id));
-     }
 
 
 
