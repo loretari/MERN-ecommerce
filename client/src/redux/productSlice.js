@@ -50,8 +50,14 @@ export const productSlice = createSlice({
         },
         updateProductSuccess: (state, action) => {
             state.isFetching = false
-            state.products[
-                state.products.findIndex((item) => item._id === action.payload.id)] = action.payload.product
+            const { productId, updatedProductData } = action.payload;
+            state.products = state.products.map(product => {
+                if (product.id === productId) {
+                    return { ...product, ...updatedProductData };
+                }
+                return product;
+            })
+
 
 
         },

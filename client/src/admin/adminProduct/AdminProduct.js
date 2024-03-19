@@ -13,13 +13,13 @@ const AdminProduct = () => {
     const productId = location.pathname.split('/')[3];
     const updatedProduct = useSelector((state) => state.product.products.find(product => product._id === productId));
 
-
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [categories, setCategories] = useState("");
-    const [price, setPrice] = useState("");
+    const [title, setTitle] = useState(updatedProduct.title);
+    const [description, setDescription] = useState(updatedProduct.description);
+    const [categories, setCategories] = useState(updatedProduct.categories.join(', '));
+    const [price, setPrice] = useState(updatedProduct.price);
     const [image, setImage] = useState("");
-    const [inStock, setInStock] = useState(true);
+    const [inStock, setInStock] = useState(updatedProduct.inStock);
+
 
 
     const dispatch = useDispatch();
@@ -36,42 +36,35 @@ const AdminProduct = () => {
 
             try {
 
-                const formData = new FormData();
-                formData.append("image", image);
-                formData.append("title", title);
-                formData.append("description", description);
-                formData.append("categories", categories);
-                formData.append("price", price);
-                formData.append("inStock", inStock);
-
-                const uploadResponse = await axios.post(
-                    "http://localhost:5001/upload/image",
-                    formData
-                );
-
-                if (!uploadResponse.data || !uploadResponse.data.image_url) {
-                    throw new Error("Image URL is not provided in the response");
-                }
-
                 const productData = {
                     title,
                     description,
-                    categories,
-                    image: uploadResponse.data.image_url,
+                    categories: categories.split(',').map(category => category.trim()),
                     price,
                     inStock,
                 };
 
-                const response = await axios.post(
-                    "http://localhost:5001/products",
-                    productData
-                );
+                if (image) {
+                    const formData = new FormData();
+                    formData.append("image", image);
 
-                const product = response.data;
+                    const uploadResponse = await axios.post("http://localhost:5001/upload/image", formData);
 
-                dispatch(updateProductSuccess(product));
+                    if (!uploadResponse.data || !uploadResponse.data.image_url) {
+                        throw new Error("Image URL is not provided in the response");
+                    }
+                  productData.image = uploadResponse.data.image_url;
 
-                navigate(`/product/${product._id}`);
+                }
+
+                const response = await axios.put(
+                    `http://localhost:5001/products/${productId}`, productData);
+               const updatedProduct = response.data
+
+
+                dispatch(updateProductSuccess({ productId, updatedProductData: updatedProduct }));
+
+                navigate(`/product/${productId}`);
             } catch (error) {
                 console.error(error.message);
             }
