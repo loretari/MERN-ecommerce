@@ -9,17 +9,24 @@ import path from "path";
 const storage = multer.diskStorage({
 
     // destination: (req, file, cb) => {
-    //     cb(null, "./public/images")
+    //     cb(null, "./public/images");
     // },
     // filename: (req, file, cb) => {
-    //     cb(null, req.body.filename)
+    //     // Check if req.body.filename is defined and not empty
+    //     if (req.body.filename && req.body.filename.trim() !== "") {
+    //         cb(null, req.body.filename);
+    //     } else {
+    //         // If req.body.filename is not provided, generate a filename
+    //         const filename = `product_${Date.now()}${path.extname(file.originalname)}`;
+    //         cb(null, filename);
+    //     }
     // }
-
 
     destination: './public/images',
     filename: (req, file, cb) => {
         const filename = `product_${Date.now()}${path.extname(file.originalname)}`;
         cb(null, filename);
+    }
 
     // destination: function (req, file, cb) {
     //    cb(null, './public/images');
@@ -33,7 +40,7 @@ const storage = multer.diskStorage({
     // }
 
     // return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
-    }
+    // }
 });
 
 const upload = multer({

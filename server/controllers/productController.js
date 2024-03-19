@@ -15,6 +15,7 @@ const productController = express.Router();
         return res.status(200).json(newProduct);
 
        } catch (error) {
+           console.error("Error creating product:", error);
            return res.status(500).json(error.message)
        }
    })
