@@ -3,8 +3,7 @@ import "./adminContainer.css";
 import Home from "../home/Home";
 import AdminProducts from "../adminProducts/AdminProducts";
 import AdminNavbar from "../adminNavbar/AdminNavbar";
-import AdminUser from "../adminUser/AdminUser";
-
+import AdminUsers from "../adminUsers/AdminUsers";
 const AdminContainer = () => {
 
     const [currentPage, setCurrentPage] = useState('Home');
@@ -16,7 +15,7 @@ const AdminContainer = () => {
         if (currentPage === 'AdminProducts') {
           return <AdminProducts/>
         }
-        return <AdminUser/>
+        return <AdminUsers/>
     };
 
     const handlePageChange = (page) => setCurrentPage(page);

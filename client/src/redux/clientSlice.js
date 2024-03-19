@@ -76,11 +76,11 @@ export const clientSlice = createSlice({
             state.error = true
         }
     }
-}
+})
 
 
-    export const {addClientSuccess, getClientFailure, getClientStart, getClientSuccess,
-        deleteClientSuccess, deleteClientFailure, deleteClientStart, updateClientFailure, updateClientStart,
-        updateClientSuccess, addClientStart, addClientFailure} = clientSlice.actions;
+    export const {addClientFailure, addClientStart, updateClientSuccess, updateClientStart, updateClientFailure,
+        deleteClientStart, deleteClientFailure, deleteClientSuccess, getClientSuccess, getClientStart,
+        getClientFailure, addClientSuccess} = clientSlice.actions;
 
 export default clientSlice.reducer;
