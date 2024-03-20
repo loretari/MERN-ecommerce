@@ -90,9 +90,9 @@ const avatarUpload = multer({
 })
 
 uploadController.post('/avatar',  avatarUpload.single('avatar'), async (req, res) => {
-    // if (!req.file) {
-    //     return res.status(400).json({error: "No file uploaded"})
-    // }
+    if (!req.file) {
+        return res.status(400).json({error: "No file uploaded"})
+    }
     // try {
     //     const userId = req.user.id;
     //     const updatedUser = await User.findByIdAndUpdate(userId, { avatar: req.file.filename }, { new: true });

@@ -152,3 +152,9 @@
     color: white;
     font-weight: 600;
 }
+.avatar-img {
+    display: block; /* Užtikrina, kad nuotrauka būtų blokinio tipo elementas */
+    margin: 0 auto; /* Centruoti nuotrauką horizontaliai */
+    max-width: 100%; /* Užtikrina, kad nuotrauka nebūtų didesnė nei jos tėvinis elementas */
+    height: auto; /* Automatiškai pritaiko aukštį pagal plotį */
+}

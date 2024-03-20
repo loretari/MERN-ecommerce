@@ -56,6 +56,7 @@ const handleSubmit = async (e) => {
 
         const response = await axios.put(`http://localhost:5001/users/${userId}`, userData );
         const updatedUser = response.data
+        console.log(updatedUser)
 
         dispatch(updateClientSuccess({userId, updatedUserData: updatedUser}));
 
@@ -86,11 +87,25 @@ const handleSubmit = async (e) => {
             </div>
             <div className= "userContainer">
                 <div className= "userShow">
-                    <div className= "userShowTop">
-                        <div className= "userShowTopTitle">
-                            <span className= "userShowUsername">{updatedUser.username} </span>
+
+                    <div className="userShowTop">
+                        <img
+                            src= {updatedUser.avatar}
+                            alt=""
+                            className="userShowImg"
+                        />
+                        <div className="userShowTopTitle">
+                            <span className="userShowUsername">{updatedUser.username}</span>
+
                         </div>
                     </div>
+
+
+                    {/*<div className= "userShowTop">*/}
+                        {/*<div className= "userShowTopTitle">*/}
+                        {/*    <span className= "userShowUsername">{updatedUser.username} </span>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
                     <div className= "userShowBottom">
                         <span className= "userShowTitle">Created at: </span>
                         <div className= "userShowInfo">
@@ -98,14 +113,24 @@ const handleSubmit = async (e) => {
                         </div>
                         <span className= "userShowTitle">Contact Details:</span>
                         <div className="userShowInfo">
+                            <span className= "userShowTitle">Email:</span>
                             <span className= "userShowInfoTitle">{updatedUser.email}</span>
                         </div>
+
                         <div className="userShowInfo">
-                            <span className= "userShowInfoTitle">{updatedUser.password}</span>
+                            <span className= "userShowTitle">Is Admin:</span>
+                            <span className= "userShowInfoTitle">{updatedUser.isAdmin}</span>
+                            <select
+                                name="isAdmin"
+                                id="isAdmin"
+                                value= {isAdmin}
+                            >
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+
                         </div>
-                        <div className="userShowInfo">
-                            <span className= "userShowInfoTitle">{updatedUser.avatar}</span>
-                        </div>
+
                     </div>
                 </div>
                 <div className= "userUpdate">
@@ -135,16 +160,7 @@ const handleSubmit = async (e) => {
                                        onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
-                            <div className= "userUpdateItem">
-                                <label>Password:</label>
-                                <input className= "userUpdateInput"
-                                       name= "password"
-                                       type= "text"
-                                       placeholder= ""
-                                       value={password}
-                                       onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </div>
+
                             <div className="userUpdateItem">
                                 <label>Is Admin:</label>
                                 <select
