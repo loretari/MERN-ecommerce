@@ -1,18 +1,73 @@
-import React from "react";
+import React, { useState} from "react";
 import "./adminUser.css";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useLocation} from "react-router";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import axios from "axios";
+import {updateClientSuccess} from "../../redux/clientSlice";
+import { format } from 'timeago.js';
 
 const AdminUser =() => {
 
 const location = useLocation();
 const userId = location.pathname.split('/')[3];
-const updatedUser = useSelector(state => state.clients.find(client => client._id === userId));
+const updatedUser = useSelector(state => state.client.clients.find(user => user._id === userId));
 
-const handleClick = (e) => {
-    window.location.assign('/admin/home')
+
+
+const [username, setUsername] = useState(updatedUser.username);
+const [email, setEmail] = useState(updatedUser.email);
+const [password, setPassword] = useState(updatedUser.password);
+const [avatar, setAvatar] = useState("");
+const [isAdmin, setIsAdmin] = useState(updatedUser.isAdmin);
+
+const dispatch = useDispatch();
+const navigate = useNavigate();
+
+
+    const handleBack = () => {
+        window.location.assign('/admin/home')
+    }
+
+const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+        const userData = {
+            username,
+            email,
+            password,
+            isAdmin,
+        };
+
+        if (avatar) {
+            const formData = new FormData();
+            formData.append("avatar", avatar);
+
+            const uploadResponse = await axios.post("http://localhost:5001/upload/avatar", formData);
+
+            if (!uploadResponse.data || !uploadResponse.data.avatar_url) {
+                throw new Error("Avatar URL is not provided in the response");
+            }
+
+            userData.avatar = uploadResponse.data.avatar_url;
+        }
+
+
+        const response = await axios.put(`http://localhost:5001/users/${userId}`, userData );
+        const updatedUser = response.data
+
+        dispatch(updateClientSuccess({userId, updatedUserData: updatedUser}));
+
+        // navigate(`/user/${userId}`);
+        navigate(`/admin/home`);
+
+    } catch (error) {
+        console.log(error.message);
+    }
 }
+
+
 
     return (
         <div className= "user">
@@ -21,7 +76,7 @@ const handleClick = (e) => {
                     to= "/"
                 >
                     <button className= "userAddButton"
-                            onClick= {handleClick}
+                            onClick= {handleBack}
                     >Back</button>
                 </Link>
                 <h1 className= "userTitle">Edit User</h1>
@@ -45,35 +100,86 @@ const handleClick = (e) => {
                         <div className="userShowInfo">
                             <span className= "userShowInfoTitle">{updatedUser.email}</span>
                         </div>
+                        <div className="userShowInfo">
+                            <span className= "userShowInfoTitle">{updatedUser.password}</span>
+                        </div>
+                        <div className="userShowInfo">
+                            <span className= "userShowInfoTitle">{updatedUser.avatar}</span>
+                        </div>
                     </div>
                 </div>
                 <div className= "userUpdate">
                     <span className= "userUpdateTitle">Edit</span>
-                    <form className= "userUpdateForm">
+                    <form className= "userUpdateForm"
+                    onSubmit={handleSubmit}
+                    >
                         <div className= "userUpdateLeft">
                             <div className= "userUpdateItem">
                                 <label>User Name:</label>
                                 <input className= "userUpdateInput"
+                                       name= "username"
                                        type= "text"
-                                       placeholder= {updatedUser.username}
+                                       placeholder= ""
+                                       value={username}
+                                       onChange={(e) => setUsername(e.target.value)}
                                 />
                             </div>
 
                             <div className= "userUpdateItem">
                                 <label>Email:</label>
                                 <input className= "userUpdateInput"
+                                       name= "email"
                                        type= "text"
-                                       placeholder= {updatedUser.email}
+                                       placeholder= ""
+                                       value={email}
+                                       onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
+                            <div className= "userUpdateItem">
+                                <label>Password:</label>
+                                <input className= "userUpdateInput"
+                                       name= "password"
+                                       type= "text"
+                                       placeholder= ""
+                                       value={password}
+                                       onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>
                             <div className="userUpdateItem">
                                 <label>Is Admin:</label>
-                                <select name="isAdmin" id="idStock">
+                                <select
+                                    name="isAdmin"
+                                    id="idStock"
+                                    value= {isAdmin}
+                                    onChange={(e) => setIsAdmin(e.target.value)}
+                                >
                                     <option value="true">Yes</option>
                                     <option value="false">No</option>
                                 </select>
                             </div>
-                            <button className= "userUpdateButton" style= {{marginTop: 20, width: 100}}>Update</button>
+
+                            <div className="userUpdateRight">
+                                <div className= "userUpdateItem">
+                                    <label>Avatar:</label>
+                                <div className="userUpdateUpload">
+                                    <input
+                                        type="file"
+                                        id="file"
+                                        onChange={ e => setAvatar(e.target.files[0])}/>
+
+                                    <label htmlFor="file">
+
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="file"
+                                        style={{ display: "none" }}
+                                    />
+                                </div>
+                            </div>
+                            </div>
+                            <button className= "userUpdateButton" style= {{marginTop: 20, width: 100}}
+                            >Update</button>
                         </div>
                     </form>
                 </div>

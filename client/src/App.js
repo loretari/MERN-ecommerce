@@ -14,6 +14,7 @@ import AdminLogin from "./admin/pages/adminLogin/AdminLogin";
 import AdminHome from "./admin/pages/adminHome/AdminHome";
 import AdminProduct from "./admin/adminProduct/AdminProduct";
 import NewProduct from "./admin/newProduct/NewProduct";
+import AdminUser from "./admin/adminUser/AdminUser";
 
 
 
@@ -32,6 +33,7 @@ function App() {
             <Route path= "/success" element={<Success/>}/>
             <Route path= "/admin" element={<AdminLogin/>}/>
             <Route path= "/admin/home" element={<AdminHome/>}/>
+            <Route path= "/admin/user/:id" element={<AdminUser/>} />
             <Route path= "/admin/product/:id" element={<AdminProduct/>}/>
             <Route path= "/newProduct" element={<NewProduct/>} />
 

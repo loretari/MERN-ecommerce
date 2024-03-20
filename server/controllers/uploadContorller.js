@@ -1,10 +1,10 @@
 import express from "express";
-
-
-const uploadController = express.Router();
 import multer from "multer";
 import path from "path";
+import {User} from "../models/User.js";
+import {verifyToken} from "../midlewares/verifyToken.js";
 
+const uploadController = express.Router();
 
 const storage = multer.diskStorage({
 
@@ -75,5 +75,43 @@ uploadController.post('/image', upload.single('image'), (req, res) => {
     // });
 
 });
+
+const avatarStorage = multer.diskStorage({
+    destination: './public/avatars',
+    filename: (req, file, cb) => {
+        const filename = `avatar_${Date.now()}${path.extname(file.originalname)}`
+        cb(null, filename);
+    }
+})
+const avatarUpload = multer({
+    storage: avatarStorage
+    // same as storage: storage
+
+})
+
+uploadController.post('/avatar',  avatarUpload.single('avatar'), async (req, res) => {
+    // if (!req.file) {
+    //     return res.status(400).json({error: "No file uploaded"})
+    // }
+    // try {
+    //     const userId = req.user.id;
+    //     const updatedUser = await User.findByIdAndUpdate(userId, { avatar: req.file.filename }, { new: true });
+    //
+    //   return res.status(200).json({
+    //    success: 1,
+    //       avatar_url: updatedUser.avatar
+    //   })
+
+
+        res.json({
+            success: 1,
+            avatar_url: `http://localhost:${process.env.PORT}/avatars/${req.file.filename}`
+        });
+
+ //     } catch (error) {
+ //    console.error(error);
+ //   return res.status(500).json({error: "Failed to upload avatar"})
+ // }
+})
 
 export default uploadController;

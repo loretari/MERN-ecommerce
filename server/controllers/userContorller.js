@@ -12,8 +12,8 @@ userController.put('/:id', async (req, res) => {
         req.body.password = await bcrypt.hash(req. body.password, 10);
     }
         //take everything inside req,body and set it again
-        const updateUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
-        return res.status(200).json(updateUser)
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        return res.status(200).json(updatedUser)
     } catch (error) {
         return res.status(500).json(error.message)
     }

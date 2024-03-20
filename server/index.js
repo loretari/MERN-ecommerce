@@ -44,6 +44,7 @@ app.use('/auth', authController);
 app.use('/carts', cartController);
 app.use('/products', productController);
 app.use('/images', express.static('public/images'));
+app.use('/avatars', express.static('public/avatars'))
 app.use('/upload', uploadController);
 app.use('/item', itemController);
 app.use('/admin', employeeController);

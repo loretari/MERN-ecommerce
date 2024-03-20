@@ -50,8 +50,18 @@ export const clientSlice = createSlice({
         },
         updateClientSuccess: (state, action) => {
             state.isFetching = false
-            state.clients[
-                state.clients.findIndex((item) => item._id === action.payload.id)] = action.payload.client
+            const { userId, updatedUserData } = action.payload;
+            state.clients = state.clients.map(user => {
+                if (user.id === userId) {
+                    return { ...user, ...updatedUserData};
+                }
+                return user;
+            })
+
+
+
+            // state.clients[
+            //     state.clients.findIndex((item) => item._id === action.payload.id)] = action.payload.client
 
         },
         updateClientFailure: (state) => {
