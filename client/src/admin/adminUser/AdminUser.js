@@ -17,7 +17,6 @@ const updatedUser = useSelector(state => state.client.clients.find(user => user.
 
 const [username, setUsername] = useState(updatedUser.username);
 const [email, setEmail] = useState(updatedUser.email);
-const [password, setPassword] = useState(updatedUser.password);
 const [avatar, setAvatar] = useState("");
 const [isAdmin, setIsAdmin] = useState(updatedUser.isAdmin);
 
@@ -36,7 +35,6 @@ const handleSubmit = async (e) => {
         const userData = {
             username,
             email,
-            password,
             isAdmin,
         };
 
