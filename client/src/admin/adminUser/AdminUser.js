@@ -58,8 +58,7 @@ const handleSubmit = async (e) => {
 
         dispatch(updateClientSuccess({userId, updatedUserData: updatedUser}));
 
-        // navigate(`/user/${userId}`);
-        navigate(`/admin/home`);
+        navigate(`/admin/users`);
 
     } catch (error) {
         console.log(error.message);

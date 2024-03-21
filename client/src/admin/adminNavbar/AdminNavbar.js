@@ -94,7 +94,7 @@ const AdminNavbar = ({ currentPage, handlePageChange }) => {
           ? 'nav-link active' 
           : 'nav-link'`}
                                 >
-                                    Staff
+                                   Employees
                                 </a></li>
                             <li className='adminLi'>
                                 <a style={{color:"white"}}onMouseOver={MouseOver} onMouseOut={MouseOut}

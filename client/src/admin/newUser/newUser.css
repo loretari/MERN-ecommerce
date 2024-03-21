@@ -55,3 +55,25 @@
     margin-top: 30px;
     cursor: pointer;
 }
+
+.addAvatarItem {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.addAvatarItem > label {
+    color: gray;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.addAvatarItem > input {
+    padding: 10px;
+}
+
+.addAvatarItem > select {
+    padding: 10px;
+}
+

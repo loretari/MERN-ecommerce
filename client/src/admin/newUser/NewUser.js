@@ -45,7 +45,7 @@ const NewUser = () => {
             formData.append("isAdmin", isAdmin);
 
             const uploadResponse = await axios.post("http://localhost:5001/upload/avatar", formData);
-console.log(uploadResponse)
+
             if (!uploadResponse.data || !uploadResponse.data.avatar_url) {
                 throw new Error("Image URL is not provided in the response")
             }
@@ -87,7 +87,7 @@ console.log(uploadResponse)
                         <input type="text" placeholder="john"
                                onChange={(e) => setUsername(e.target.value)}/>
                     </div>
-                    <div className= "addProductItem">
+                    <div className= "addAvatarItem">
                         <label>Avatar</label>
                         <input type= "file"
                                id= "avatar"

@@ -119,7 +119,7 @@ const NewProduct = () => {
                                onChange={handleImageChange}
 
                         />
-                        <img id= "productImage" src={previewImage} alt= "Selected Image Preview" />
+                        <img id= "userAvatar" src={previewImage} alt= "Selected Image Preview" />
 
                     </div>
                     <div className= "addProductItem">
