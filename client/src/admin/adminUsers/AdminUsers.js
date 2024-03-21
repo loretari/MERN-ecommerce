@@ -39,7 +39,7 @@ useEffect(() => {
             console.log("Product successfully deleted")
             dispatch (deleteClientSuccess(id));
         } else{
-            console.error("Failed to delete product:", res.statusText);
+            console.error("Failed to delete user:", res.statusText);
             dispatch(deleteClientFailure("Failed to delete product"))
         }
     } catch (error) {

@@ -18,10 +18,10 @@ employeeController.put('/employee/:id', async (req, res) => {
     }
 })
 
-// delete ean employee
+// delete an employee
 employeeController.delete('/employee/:id', async (req, res) => {
     try {
-        await Employee.findByIdAndDelete(res.params.id);
+        await Employee.findByIdAndDelete(req.params.id);
         return res.status(200).json("Employee successfully deleted")
     } catch (error) {
         return res.status(500).json(error.message)

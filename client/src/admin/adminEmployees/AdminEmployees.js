@@ -4,7 +4,12 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import {DataGrid} from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteEmployeeSuccess, getEmployeeFailure, getEmployeeSuccess} from "../../redux/employeeSlice";
+import {
+    deleteEmployeeFailure,
+    deleteEmployeeSuccess,
+    getEmployeeFailure,
+    getEmployeeSuccess
+} from "../../redux/employeeSlice";
 import axios from "axios";
 
 const AdminEmployees = () => {
@@ -35,8 +40,23 @@ const AdminEmployees = () => {
 
         }, [dispatch]);
 
-    const handleDelete = (id) => {
-        dispatch(deleteEmployeeSuccess, {id})
+    const handleDelete = async (id) => {
+
+        try {
+           const res = await axios.delete(`http://localhost:5001/admin/employee/${id}`)
+            if (res.status === 200) {
+                console.log("Product successfully deleted")
+                dispatch(deleteEmployeeSuccess(id));
+            } else {
+                console.error("Failed to delete employee:", res.statusText)
+                dispatch(deleteEmployeeFailure("Failed to delete product"))
+            }
+
+        } catch (error) {
+            console.error("Failed to delete employee:", error.message);
+            dispatch(deleteEmployeeFailure(error));
+        }
+
     }
     
 
@@ -95,7 +115,7 @@ const AdminEmployees = () => {
                         </Link>
                         <DeleteOutlineOutlinedIcon
                             className="productListDelete"
-                            onClick={() => handleDelete(params.row.id)}
+                            onClick={() => handleDelete(params.row._id)}
                         />
                     </>
                 );
