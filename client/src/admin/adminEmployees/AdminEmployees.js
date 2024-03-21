@@ -112,7 +112,7 @@ const AdminEmployees = () => {
             <DataGrid
                 rows = {employees}
                 columns = {columns}
-                getRowId = {(row) => row.id}
+                getRowId = {(row) => row._id}
                 pageSize={8}
                 rowsPerPageOptions={[8]}
                 // checkboxSelection

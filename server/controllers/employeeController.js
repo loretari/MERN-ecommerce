@@ -57,8 +57,8 @@ employeeController.post('/employee', async (req, res) => {
         phone: req.body.phone,
         role: req.body.role
     })
-    if(!req.body.firstName || !req.body.mail || !req.body.salary || req.body.phone || req.body.lastName) {
-        return  res.status(500).json("Missing value!")
+    if(!req.body.firstName || !req.body.mail || !req.body.salary || !req.body.phone || !req.body.lastName) {
+        return  res.status(500).json("Missing value!");
     }
 
     try {
