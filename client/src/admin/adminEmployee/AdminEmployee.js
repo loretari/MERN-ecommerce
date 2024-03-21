@@ -3,7 +3,8 @@ import "./adminEmployee.css";
 
 const AdminEmployee = () => {
     return (
-
+<>
+    </>
     )
 }
 

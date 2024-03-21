@@ -18,6 +18,8 @@ import AdminUser from "./admin/adminUser/AdminUser";
 import NewUser from "./admin/newUser/NewUser";
 import AdminUsers from "./admin/adminUsers/AdminUsers";
 import AdminProducts from "./admin/adminProducts/AdminProducts";
+import AdminEmployee from "./admin/adminEmployee/AdminEmployee";
+import AdminEmployees from "./admin/adminEmployees/AdminEmployees";
 
 
 
@@ -42,6 +44,8 @@ function App() {
             <Route path= "/admin/product/:id" element={<AdminProduct/>}/>
             <Route path= "/admin/products" element={<AdminProducts/>}/>
             <Route path= "/newProduct" element={<NewProduct/>} />
+            <Route path= "/admin/employee/:id" element={<AdminEmployee/>}/>
+            <Route path= "/admin/employees" element={<AdminEmployees/>}/>
 
 
             {/* no match route */}
