@@ -90,7 +90,7 @@ const AdminEmployees = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <Link to={"/admin/employee" + params.row.id}>
+                        <Link to={"/admin/employee/" + params.row._id}>
                             <button className="productListEdit">Edit</button>
                         </Link>
                         <DeleteOutlineOutlinedIcon

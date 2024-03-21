@@ -25,13 +25,6 @@ const NewEmployee = () => {
         e.preventDefault();
 
         try {
-            // const formData = new FormData();
-            //     formData.append("firstName", firstName);
-            //     formData.append("lastName", lastName);
-            //     formData.append("mail", mail);
-            //     formData.append("phone", phone);
-            //     formData.append("role", role);
-            //     formData.append("salary", salary);
 
                 const employeeData = {
                     firstName,

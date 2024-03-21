@@ -9,7 +9,7 @@ employeeController.put('/employee/:id', async (req, res) => {
     try{
         const updateEmp = await Employee.findByIdAndUpdate(req.params.id, {
             // take everything inside req.body and set it again
-            $set: res.body
+            $set: req.body
         }, {new: true})
         return res.status(200).json(updateEmp);
 

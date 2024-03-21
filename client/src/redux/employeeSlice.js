@@ -49,8 +49,16 @@ export const employeeSlice = createSlice({
         },
         updateEmployeeSuccess: (state, action) => {
             state.isFetching = false
-            state.employees[
-                state.employees.findIndex((item) => item._id === action.payload.id)] = action.payload.Employee
+            const { employeeId, updatedEmployeeData } = action.payload;
+            state.employees = state.employees.map(employee => {
+                if (employee.id === employeeId) {
+                    return { ...employee, ...updatedEmployeeData};
+                }
+                return employee;
+            })
+
+            // state.employees[
+            //     state.employees.findIndex((item) => item._id === action.payload.id)] = action.payload.Employee
 
         },
         updateEmployeeFailure: (state) => {
