@@ -1,74 +1,68 @@
 import React, {useState} from "react";
-import "./adminProduct.css";
+import "./adminItem.css";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import { updateProductSuccess} from "../../redux/productSlice";
+import {updateItemFailure, updateItemSuccess} from "../../redux/itemSlice";
 import axios from "axios";
 
-
-
-const AdminProduct = () => {
+const AdminItem = () => {
 
     const location = useLocation();
-    const productId = location.pathname.split('/')[3];
-    const updatedProduct = useSelector((state) => state.product.products.find(product => product._id === productId));
+    const itemId = location.pathname.split("/")[3];
+    const updatedItem = useSelector((state) => state.item.items.find(item => item._id === itemId));
 
-    const [title, setTitle] = useState(updatedProduct.title);
-    const [description, setDescription] = useState(updatedProduct.description);
-    const [categories, setCategories] = useState(updatedProduct.categories.join(', '));
-    const [price, setPrice] = useState(updatedProduct.price);
-    const [image, setImage] = useState("");
-    const [inStock, setInStock] = useState(updatedProduct.inStock);
-
+    const [title, setTitle] = useState(updatedItem.title);
+    const [cost, setCost] = useState(updatedItem.cost);
+    const [quantity, setQuantity] = useState(updatedItem.quantity);
+    const [image, setImage] = useState(updatedItem.image);
+    const [categories, setCategories] = useSelector(updatedItem.categories);
+    const [inStock, setInStock] = useState(updatedItem.inStock);
 
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleBack = () => {
-        window.location.assign('/admin/home');
+        window.location.assign('/admin/home')
     }
 
 
+const handleClick = async (e) => {
+        e.preventDefault();
+        try {
+            const itemData = {
+                title,
+                categories,
+                cost,
+                quantity,
+                inStock,
+            };
 
-    const handleClick = async (e) => {
-        e.preventDefault()
+            if (image) {
+                const formData = new FormData();
+                formData.append("image", image);
 
-            try {
+                const uploadResponse = await axios.post("http://localhost:5001/upload/image", formData);
 
-                const productData = {
-                    title,
-                    description,
-                    categories: categories.split(',').map(category => category.trim()),
-                    price,
-                    inStock,
-                };
-
-                if (image) {
-                    const formData = new FormData();
-                    formData.append("image", image);
-
-                    const uploadResponse = await axios.post("http://localhost:5001/upload/image", formData);
-
-                    if (!uploadResponse.data || !uploadResponse.data.image_url) {
-                        throw new Error("Image URL is not provided in the response");
-                    }
-                  productData.image = uploadResponse.data.image_url;
-
+                if (!uploadResponse.data || !uploadResponse.data.image_url) {
+                    throw Error("Image URL is not provided in the response");
                 }
 
-                const response = await axios.put(
-                    `http://localhost:5001/products/${productId}`, productData);
-               const updatedProduct = response.data
-
-
-                dispatch(updateProductSuccess({ productId, updatedProductData: updatedProduct }));
-
-                navigate(`/product/${productId}`);
-            } catch (error) {
-                console.error(error.message);
+                itemData.image = uploadResponse.data.image_url;
             }
-        };
+
+            const response = await axios.put(`http://localhost:5001/item/${itemId}`, itemData);
+             const updatedItem = response.data;
+
+             dispatch(updateItemSuccess({itemId: updatedItem._id, updatedItemData: updatedItem} ))
+            navigate(`/admin/items`);
+
+
+        } catch (error) {
+            console.log(error.message)
+            dispatch(updateItemFailure(error));
+        }
+}
 
     return (
         <div className="user">
@@ -86,29 +80,28 @@ const AdminProduct = () => {
                 <div className="userShow">
                     <div className="userShowTop">
                         <img
-                            src= {updatedProduct.image}
+                            src= {image}
                             alt=""
                             className="userShowImg"
                         />
                         <div className="userShowTopTitle">
-                            <span className="userShowUsername">{updatedProduct.title}</span>
-
+                            <span className="userShowUsername">{title}</span>
                         </div>
                     </div>
                     <div className="userShowBottom">
-                        <span className="userShowTitle">Price</span>
+                        <span className="userShowTitle">Category</span>
                         <div className="userShowInfo">
-                            <span className="userShowInfoTitle">$ {updatedProduct.price}</span>
+                            <span className="userShowInfoTitle">{categories}</span>
                         </div>
-                        <span className="userShowTitle">Description</span>
+                        <span className="userShowTitle">$ Cost</span>
                         <div className="userShowInfo">
-                            <span className="userShowInfoTitle">{updatedProduct.description}</span>
+                            <span className="userShowInfoTitle">$ {cost}</span>
                         </div>
 
                         <span className="userShowTitle">In Stock</span>
 
                         <div className="userShowInfo">
-                            <span className="userShowInfoTitle">{updatedProduct.inStock}</span>
+                            <span className="userShowInfoTitle">{inStock}</span>
                         </div>
 
 
@@ -130,35 +123,36 @@ const AdminProduct = () => {
                                 />
                             </div>
                             <div className="userUpdateItem">
-                                <label>Description</label>
+                                <label>Category</label>
                                 <input
-                                    name= "description"
-                                    type="text"
-                                    placeholder=""
-                                    onChange= {(e) => setDescription(e.target.value)}
-                                    value={description}
-                                    className="userUpdateInput"
-                                />
-                            </div>
-                            <div className="userUpdateItem">
-                                <label>Categories:</label>
-                                <input
+                                    name= "categories"
                                     type="text"
                                     placeholder=""
                                     value={categories}
                                     onChange= {(e) => setCategories(e.target.value)}
-
+                                    className="userUpdateInput"
                                 />
                             </div>
 
                             <div className="userUpdateItem">
-                                <label>Price</label>
+                                <label>$ Cost</label>
                                 <input
-                                    name= "price"
+                                    name= "cost"
                                     type="number"
                                     placeholder=""
-                                    value={price}
-                                    onChange= {(e) => setPrice(e.target.value)}
+                                    value={cost}
+                                    onChange= {(e) => setCost(e.target.value)}
+                                    className="userUpdateInput"
+                                />
+                            </div>
+                            <div className="userUpdateItem">
+                                <label>Quantity</label>
+                                <input
+                                    name= "quantity"
+                                    type="number"
+                                    placeholder=""
+                                    value={quantity}
+                                    onChange= {(e) => setQuantity(e.target.value)}
                                     className="userUpdateInput"
                                 />
                             </div>
@@ -186,7 +180,7 @@ const AdminProduct = () => {
                                 <input type="file" id="file" style={{ display: "none" }} />
                             </div>
                             <button className="userUpdateButton"
-                                onClick={handleClick}
+                                    onClick={handleClick}
                             >
                                 Update
                             </button>
@@ -198,4 +192,4 @@ const AdminProduct = () => {
     )
 }
 
-export default AdminProduct;
+export default AdminItem;

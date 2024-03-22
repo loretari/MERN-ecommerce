@@ -38,10 +38,17 @@ const AdminItems = () =>  {
             renderCell: (params) => {
                 return (
                     <div className="productListItem">
+                        <img className="productListImg" src={params.row.image} alt="" />
                         {params.row.title}
                     </div>
                 );
             },
+        },
+        {
+            field: "categories",
+            headerName: "Category",
+            headerAlign: 'left',
+            width: 160,
         },
         { field: "inStock",  headerAlign: 'left',headerName: "Stock", width: 140 },
         { field: "quantity",  headerAlign: 'left',headerName: "Quantity", width: 140 },
@@ -59,7 +66,7 @@ const AdminItems = () =>  {
             renderCell: (params) => {
                 return (
                     <>
-                        <Link to={"/admin/product/" + params.row._id}>
+                        <Link to={"/admin/item/" + params.row._id}>
                             <button className="productListEdit">Edit</button>
                         </Link>
                         <DeleteOutlineOutlinedIcon

@@ -49,8 +49,17 @@ export const itemSlice = createSlice({
         },
         updateItemSuccess: (state, action) => {
             state.isFetching = false
-            state.items[
-                state.items.findIndex((item) => item._id === action.payload.id)] = action.payload.item
+            const {itemId, updatedItemData} = action.payload;
+            state.items = state.items.map(item => {
+                if (item.id === itemId) {
+                    return { ...item, ...updatedItemData};
+                }
+                return item;
+            })
+
+
+            // state.items[
+            //     state.items.findIndex((item) => item._id === action.payload.id)] = action.payload.item
 
         },
         updateItemFailure: (state) => {

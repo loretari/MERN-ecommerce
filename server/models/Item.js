@@ -8,14 +8,24 @@ const ItemSchema = new mongoose.Schema({
     },
     cost: {
         type: Number,
+        required: true,
     },
+    categories: {
+            type: Array,
+            required: true,
+        },
     quantity: {
         type: Number,
+        required: true,
     },
     inStock: {
         type: Boolean,
         default: true,
-    }
+    },
+        image: {
+            type: String,
+            required: true,
+        },
 },
     {timestamps: true}
     );

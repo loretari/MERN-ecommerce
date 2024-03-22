@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import "./adminProducts.css";
 import {DataGrid} from "@mui/x-data-grid";
 import {useDispatch, useSelector} from "react-redux";
@@ -79,6 +79,11 @@ const AdminProducts = () => {
             },
         },
         {
+            field: "categories",
+            headerName: "Category",
+            width: 200,
+        },
+        {
             field: "inStock",
             headerName: "Stock",
             width: 200,
@@ -94,6 +99,7 @@ const AdminProducts = () => {
         {
             field: "action",
             headerName: "Action",
+            headerAlign: 'left',
             width: 150,
             renderCell: (params) => {
                 return (

@@ -5,7 +5,7 @@ import AdminProducts from "../adminProducts/AdminProducts";
 import AdminNavbar from "../adminNavbar/AdminNavbar";
 import AdminUsers from "../adminUsers/AdminUsers";
 import AdminEmployees from "../adminEmployees/AdminEmployees";
-import AdminItems from "../AdminItems/AdminItems";
+import AdminItems from "../adminItems/AdminItems";
 const AdminContainer = () => {
 
     const [currentPage, setCurrentPage] = useState('Home');
