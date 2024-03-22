@@ -10,7 +10,7 @@ const initialState = {
 
 // register a new user
 export const itemSlice = createSlice({
-    name: "items",
+    name: "item",
     initialState,
     reducers: {
         //get all Items (no action because is only fetching)
@@ -34,6 +34,8 @@ export const itemSlice = createSlice({
         deleteItemSuccess: (state, action) => {
             state.isFetching = false
             //we remove the Item whose id matches with our specific Item
+            // state.items = state.items.filter(item => item._id !== action.payload);
+
             state.items.splice(
                 state.items.findIndex((item) => item._id === action.payload),1
             )
@@ -76,9 +78,9 @@ export const itemSlice = createSlice({
             state.items.push(action.payload)
 
         },
-        addItemFailure: (state) => {
+        addItemFailure: (state, action) => {
             state.isFetching = false
-            state.error = true
+            state.error = action.payload;
         }
     },
     })

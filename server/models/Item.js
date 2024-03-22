@@ -22,7 +22,7 @@ const ItemSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
     },
-        image: {
+    image: {
             type: String,
             required: true,
         },

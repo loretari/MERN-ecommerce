@@ -15,7 +15,7 @@ const AdminItem = () => {
     const [cost, setCost] = useState(updatedItem.cost);
     const [quantity, setQuantity] = useState(updatedItem.quantity);
     const [image, setImage] = useState(updatedItem.image);
-    const [categories, setCategories] = useSelector(updatedItem.categories);
+    const [categories, setCategories] = useState(updatedItem.categories.join(', '));
     const [inStock, setInStock] = useState(updatedItem.inStock);
 
 
@@ -32,7 +32,7 @@ const handleClick = async (e) => {
         try {
             const itemData = {
                 title,
-                categories,
+                categories: categories.split(',').map(category => category.trim()),
                 cost,
                 quantity,
                 inStock,
@@ -96,6 +96,10 @@ const handleClick = async (e) => {
                         <span className="userShowTitle">$ Cost</span>
                         <div className="userShowInfo">
                             <span className="userShowInfoTitle">$ {cost}</span>
+                        </div>
+                        <span className="userShowTitle">Quantity</span>
+                        <div className="userShowInfo">
+                            <span className="userShowInfoTitle">{quantity}</span>
                         </div>
 
                         <span className="userShowTitle">In Stock</span>

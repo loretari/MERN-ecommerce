@@ -10,7 +10,24 @@ import {deleteItemFailure, deleteItemSuccess} from "../../redux/itemSlice";
 const AdminItems = () =>  {
 
     const items = useSelector((state) => state.item.items)
+
     const dispatch = useDispatch();
+
+console.log(items)
+    if (!Array.isArray(items)) {
+        console.error('Items is not an array');
+        return null;
+    }
+
+    const isValidItemsStructure = items.every(item => {
+        return typeof item === 'object' && item !== null && 'id' in item;
+    });
+
+    if (!isValidItemsStructure) {
+        console.error('Items have invalid structure or missing id field');
+        return null; 
+    }
+
 
     const handleDelete = async (id) => {
         try {
@@ -32,7 +49,7 @@ const AdminItems = () =>  {
         { field: "_id", headerName: "ID", headerAlign: 'center', width: 180 },
         {
             field: "title",
-            headerName: "Product",
+            headerName: "Title",
             headerAlign: 'left',
             width: 200,
             renderCell: (params) => {

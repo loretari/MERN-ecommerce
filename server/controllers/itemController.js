@@ -50,10 +50,12 @@ itemController.post('/', async (req, res) => {
         title: req.body.title,
         cost: req.body.cost,
         quantity: req.body.quantity,
-        inStock: req.body.inStock
+        inStock: req.body.inStock,
+        categories: req.body.categories,
+        image: req.body.image,
     })
-    if (req.body.title || !req.body.cost || !req.body.inStock) {
-        return res.status(200).json("Missing value")
+    if (req.body.title || !req.body.cost || req.body.quantity === undefined || !req.body.inStock === undefined) {
+        return res.status(200).json("Missing or invalid values for required fields")
     }
 
     try {
