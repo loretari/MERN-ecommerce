@@ -17,6 +17,7 @@ import cartSlice from "./cartSlice";
 import productSlice from "./productSlice";
 import clientSlice from "./clientSlice";
 import employeeSlice from "./employeeSlice";
+import itemSlice from "./itemSlice";
 
 const persistConfig = {
     key: "root",
@@ -30,6 +31,7 @@ const reducers = combineReducers({
     product: productSlice,
     client: clientSlice,
     employee: employeeSlice,
+    item: itemSlice,
 
 })
 

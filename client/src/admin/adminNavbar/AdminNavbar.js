@@ -99,12 +99,12 @@ const AdminNavbar = ({ currentPage, handlePageChange }) => {
                             <li className='adminLi'>
                                 <a style={{color:"white"}}onMouseOver={MouseOver} onMouseOut={MouseOut}
                                    href="#items"
-                                   onClick={() => handlePageChange('Items')}
+                                   onClick={() => handlePageChange('AdminItems')}
                                    className={`${'navbar-item has-text-white'} currentPage === 'Items' 
           ? 'nav-link active' 
           : 'nav-link'`}
                                 >
-                                    Stock
+                                    Items
                                 </a></li>
                             <button onClick={handleLogout} className="logout">
                                 Log Out

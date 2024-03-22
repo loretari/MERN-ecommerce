@@ -5,6 +5,7 @@ import AdminProducts from "../adminProducts/AdminProducts";
 import AdminNavbar from "../adminNavbar/AdminNavbar";
 import AdminUsers from "../adminUsers/AdminUsers";
 import AdminEmployees from "../adminEmployees/AdminEmployees";
+import AdminItems from "../AdminItems/AdminItems";
 const AdminContainer = () => {
 
     const [currentPage, setCurrentPage] = useState('Home');
@@ -22,7 +23,9 @@ const AdminContainer = () => {
         if (currentPage === 'AdminEmployees') {
             return <AdminEmployees/>
         }
-        // return <AdminUsers/>
+        if (currentPage === 'AdminItems') {
+            return <AdminItems/>
+        }
     };
 
     const handlePageChange = (page) => setCurrentPage(page);
