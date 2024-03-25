@@ -3,6 +3,7 @@ import "./home.css";
 import {useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 import WidgetSm from "../widgetSm/WidgetSm";
+import WidgetLg from "../widgetLg/WidgetLg";
 
 const Home = () => {
 
@@ -29,7 +30,7 @@ const Home = () => {
                 </div>
             )}
             <div className= "containerCenter">
-                WidgetLg
+                <WidgetLg/>
             </div>
             <div className= "containerRight">
                 <WidgetSm/>

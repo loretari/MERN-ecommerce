@@ -21,8 +21,21 @@ const Cart = () => {
     const [stripeToken, setStripeToken] = useState(null);
     const {token} = useSelector((state) => state.user);
 
-    const onToken = (token) => {
+    const onToken = async (token) => {
         setStripeToken(token);
+
+        try {
+            const response = await axios.post(`http://localhost:5001/orders`, {
+                products: cart.products,
+                total: cart.total,
+                token: token,
+                userId: user._id,
+            })
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
+
     }
 
 
