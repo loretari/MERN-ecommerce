@@ -21,6 +21,8 @@ import AdminProducts from "./admin/adminProducts/AdminProducts";
 import AdminEmployee from "./admin/adminEmployee/AdminEmployee";
 import AdminEmployees from "./admin/adminEmployees/AdminEmployees";
 import NewEmployee from "./admin/newEmployee/NewEmployee";
+import AdminItems from "./admin/adminItems/AdminItems";
+import AdminItem from "./admin/adminItem/AdminItem";
 
 
 
@@ -49,6 +51,8 @@ function App() {
             <Route path= "/admin/employee/:id" element={<AdminEmployee/>}/>
             <Route path= "/admin/employees" element={<AdminEmployees/>}/>
             <Route path= "/newEmployee" element={<NewEmployee/>}/>
+            <Route path= "admin/items" element={<AdminItems/>}/>
+            <Route path= "admin/item/:id" element={<AdminItem/>}/>
 
 
             {/* no match route */}
