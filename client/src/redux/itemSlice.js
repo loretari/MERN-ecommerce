@@ -1,3 +1,4 @@
+
 import { createSlice } from "@reduxjs/toolkit";
 
 
@@ -21,6 +22,8 @@ export const itemSlice = createSlice({
         getItemSuccess: (state, action) => {
             state.isFetching = false
             state.items = action.payload
+            state.error = false;
+
         },
         getItemFailure: (state) => {
             state.isFetching = false

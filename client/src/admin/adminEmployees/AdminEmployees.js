@@ -16,6 +16,8 @@ const AdminEmployees = () => {
 
     const employees = useSelector((state) => state.employee.employees)
 
+    console.log(employees);
+
     const dispatch = useDispatch();
 
     useEffect(() => {

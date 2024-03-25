@@ -17,15 +17,16 @@ const AdminContainer = () => {
         if (currentPage === 'AdminProducts') {
           return <AdminProducts/>
         }
-        if (currentPage === 'AdminUsers') {
-            return <AdminUsers/>
-        }
+        // if (currentPage === 'AdminUsers') {
+        //     return <AdminUsers/>
+        // }
         if (currentPage === 'AdminEmployees') {
             return <AdminEmployees/>
         }
         if (currentPage === 'AdminItems') {
             return <AdminItems/>
         }
+        return <AdminUsers/>
     };
 
     const handlePageChange = (page) => setCurrentPage(page);

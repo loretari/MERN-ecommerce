@@ -25,11 +25,13 @@ itemController.delete('/:id', async (req, res) => {
 });
 
 // get all items
+
 itemController.get('/', async (req, res) => {
     try {
-        const employees = await Item.find();
-        return res.status(200).json(employees);
+        const items = await Item.find();
+        return res.status(200).json(items);
     } catch (error) {
+        console.error("Error fetching items:", error);
         return res.status(500).json(error.message)
     }
 });
@@ -46,21 +48,11 @@ itemController.get('/:id', async (req, res) => {
 
 // create a new item
 itemController.post('/', async (req, res) => {
-    const newItem = new Item ({
-        title: req.body.title,
-        cost: req.body.cost,
-        quantity: req.body.quantity,
-        inStock: req.body.inStock,
-        categories: req.body.categories,
-        image: req.body.image,
-    })
-    if (req.body.title || !req.body.cost || req.body.quantity === undefined || !req.body.inStock === undefined) {
-        return res.status(200).json("Missing or invalid values for required fields")
-    }
+   try {
+    const newItem = new Item(req.body);
+    const savedItem = await newItem.save();
+    return res.status(201).json(savedItem);
 
-    try {
-        const savedItem = await newItem.save()
-        return res.status(200).json(savedItem);
 
     } catch (error) {
         return res.status(500).json(error.message)

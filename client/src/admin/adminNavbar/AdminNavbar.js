@@ -22,7 +22,7 @@ const AdminNavbar = ({ currentPage, handlePageChange }) => {
 
     const handleLogout =(e) => {
       e.preventDefault();
-      dispatch(logout);
+      dispatch(logout());
       navigate('/');
     }
 
@@ -47,7 +47,9 @@ const AdminNavbar = ({ currentPage, handlePageChange }) => {
                 <div   className={`navbar-menu ${isActive ? "is-active" : ""}`}>
                     <div className="navbar-start">
                         <ul ><li className= "adminLi">
-                            <a style = {{color: "white"}} onMouseOver= {MouseOver} onMouseOut= {MouseOut}
+                            <a style = {{color: "white"}}
+                               onMouseOver= {MouseOver}
+                               onMouseOut= {MouseOut}
                                href= "#home"
                                onClick= {() => handlePageChange('Home')}
                                className= {`${'navbar-item has-text-white'} currentPage === 'Home' 
@@ -88,7 +90,7 @@ const AdminNavbar = ({ currentPage, handlePageChange }) => {
 
                             <li className='adminLi'>
                                 <a style={{color:"white"}}onMouseOver={MouseOver} onMouseOut={MouseOut}
-                                   href="#staff"
+                                   href="#adminemployees"
                                    onClick={() => handlePageChange('AdminEmployees')}
                                    className={`${'navbar-item has-text-white'} currentPage === 'AdminEmployees' 
           ? 'nav-link active' 
@@ -97,7 +99,9 @@ const AdminNavbar = ({ currentPage, handlePageChange }) => {
                                    Employees
                                 </a></li>
                             <li className='adminLi'>
-                                <a style={{color:"white"}}onMouseOver={MouseOver} onMouseOut={MouseOut}
+                                <a style={{color:"white"}}
+                                   onMouseOver={MouseOver}
+                                   onMouseOut={MouseOut}
                                    href="#items"
                                    onClick={() => handlePageChange('AdminItems')}
                                    className={`${'navbar-item has-text-white'} currentPage === 'Items' 

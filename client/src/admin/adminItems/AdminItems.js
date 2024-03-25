@@ -1,33 +1,40 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./adminItems.css";
 import { Link } from "react-router-dom";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import {DataGrid} from "@mui/x-data-grid";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
-import {deleteItemFailure, deleteItemSuccess} from "../../redux/itemSlice";
+import {deleteItemFailure, deleteItemSuccess, getItemFailure, getItemSuccess} from "../../redux/itemSlice";
 
 const AdminItems = () =>  {
 
     const items = useSelector((state) => state.item.items)
 
     const dispatch = useDispatch();
+    console.log(items)
 
-console.log(items)
-    if (!Array.isArray(items)) {
-        console.error('Items is not an array');
-        return null;
-    }
 
-    const isValidItemsStructure = items.every(item => {
-        return typeof item === 'object' && item !== null && 'id' in item;
-    });
+    useEffect(() => {
+        const getItems = async () => {
 
-    if (!isValidItemsStructure) {
-        console.error('Items have invalid structure or missing id field');
-        return null; 
-    }
+            try {
+                const res = await axios.get(`http://localhost:5001/item`)
 
+                if (res.status === 200) {
+                    const data = res.data;
+                    dispatch(getItemSuccess(data));
+                } else {
+                    console.error("Failed to fetch items")
+                    dispatch(getItemFailure())
+                }
+            } catch (error) {
+                console.log("Axios error:", error.message);
+                dispatch(getItemFailure(error))
+            }
+        }
+        getItems();
+    }, [dispatch])
 
     const handleDelete = async (id) => {
         try {
@@ -40,7 +47,7 @@ console.log(items)
             }
 
         } catch (error) {
-            console.log("Axios error:", error.message)
+            console.log()
             dispatch(deleteItemFailure(error))
         }
     }
@@ -49,7 +56,7 @@ console.log(items)
         { field: "_id", headerName: "ID", headerAlign: 'center', width: 180 },
         {
             field: "title",
-            headerName: "Title",
+            headerName: "Product",
             headerAlign: 'left',
             width: 200,
             renderCell: (params) => {
@@ -95,6 +102,7 @@ console.log(items)
             },
         },
     ];
+
 
     return (
         <div className= "adminItem">
