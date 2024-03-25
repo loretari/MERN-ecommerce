@@ -23,6 +23,7 @@ import AdminEmployees from "./admin/adminEmployees/AdminEmployees";
 import NewEmployee from "./admin/newEmployee/NewEmployee";
 import AdminItems from "./admin/adminItems/AdminItems";
 import AdminItem from "./admin/adminItem/AdminItem";
+import NewItem from "./admin/newItem/NewItem";
 
 
 
@@ -53,6 +54,7 @@ function App() {
             <Route path= "/newEmployee" element={<NewEmployee/>}/>
             <Route path= "admin/items" element={<AdminItems/>}/>
             <Route path= "admin/item/:id" element={<AdminItem/>}/>
+            <Route path= "/newItem" element={<NewItem/>}/>
 
 
             {/* no match route */}

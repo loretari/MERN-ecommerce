@@ -18,12 +18,24 @@ const AdminItem = () => {
     const [ image, setImage ] = useState(updatedItem.image);
     const [ categories, setCategories ] = useState(updatedItem.categories.join(', '));
     const [ inStock, setInStock ] = useState(updatedItem.inStock);
+    const [previewImage, setPreviewImage] = useState(null);
 
    const dispatch = useDispatch();
    const navigate = useNavigate();
    
     const handleBack = () => {
         window.location.assign('/admin/home');
+    }
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(e.target.files[0]);
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            setPreviewImage(event.target.result);
+        };
+        reader.readAsDataURL(file);
     }
 
     if (window.console && window.console.error) {
@@ -185,6 +197,19 @@ const AdminItem = () => {
                             </div>
                         </div>
                         <div className="userUpdateRight">
+
+
+                            <div className= "addProductItem">
+                                <label>Image</label>
+                                <input type= "file"
+                                       id= "image"
+                                       placeholder= "Image..."
+                                       onChange={handleImageChange}
+
+                                />
+                                <img id= "image" src={previewImage} alt= "Selected Image Preview" />
+                            </div>
+
                             <div className="userUpdateUpload">
                                 <input type="file" id="file" onChange={ e => setImage(e.target.files[0])}/>
                                 <label htmlFor="file">
