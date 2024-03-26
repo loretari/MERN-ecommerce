@@ -2,12 +2,13 @@ import React, {useEffect, useState} from "react";
 import "./widgetLg.css";
 import { format } from "timeago.js/esm/format";
 import axios from "axios";
-import StripeCheckout from "react-stripe-checkout";
+
 
 
 const WidgetLg = () => {
 
     const [orders, setOrders] = useState([]);
+
 
     // console.log(orders);
 
@@ -35,32 +36,55 @@ const WidgetLg = () => {
         <div className="widgetLg">
             <h3 className="widgetLgTitle">Latest transactions</h3>
             <div className="widgetLgTable">
-                <div className="widgetLgTr">
-                    <div className="widgetLgTh">Customer Id</div>
-                    <div className="widgetLgTh">Date</div>
-                    <div className="widgetLgTh">Amount</div>
-                    <div className="widgetLgTh">Status</div>
-                </div>
                 {orders
-                    .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-                    .map((order)=>(
-                        <div className="widgetLgTr" key={order._id}>
-                            <div className="widgetLgUser">
-
-                                <span className="widgetLgName">{order.userId}</span>
-                            </div>
-                            <div className="widgetLgDate">{format(order.createdAt)}</div>
-                            <div className="widgetLgAmount">$ {order.amount}</div>
-                            <div className="widgetLgStatus">
-                                <Button type={order.status} />
-                            </div>
-                        </div>
-                    ))}
+                            .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+                            .map((order) => (
+                                <div className="widgetLgTr" key={order._id}>
+                <div className="widgetLgUser">
+                    <span>
+                        <b className="widgetLgTh">Customer Id: </b>{order.userId}
+                    </span>
+                </div>
+                <div className="widgetLgDate">
+                    <span>
+                        <b className="widgetLgTh">Date: </b>{format(order.createdAt)}
+                    </span>
+                </div>
+                <div className="widgetLgDate">
+                    <span>
+                        <b className="widgetLgTh">Products Id: </b>{order.products.productId}
+                        {order.products.map(product => product.productId).join(", ")}
+                        </span>
+                </div>
+                <div className="widgetLgDate">
+                    <span>
+                        <b className="widgetLgTh">Quantity: </b>{order.products.quantity}
+                        {order.products.map(product => product.quantity).join(", ")}
+                        </span>
+                </div>
+                <div className="widgetLgDate">
+                    <span>
+                        <b className="widgetLgTh">Amount: </b>$ {order.amount}
+                        </span>
+                </div>
+                <div className="widgetLgDate">
+                    <span>
+                        <b className="widgetLgTh">Address: </b>{order.address}
+                        </span>
+                </div>
+                <div className="widgetLgDate">
+                    <span>
+                        <b className="widgetLgTh">Status: </b>
+                        <div className="widgetLgStatus">
+                    <Button type={order.status}/>
+                </div>
+                </span>
+                </div>
+                                </div>
+                    )) }
             </div>
-
-
         </div>
-    )
+)
 }
 
 export default WidgetLg;

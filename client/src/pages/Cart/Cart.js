@@ -20,7 +20,11 @@ const Cart = () => {
     const dispatch = useDispatch();
 
     const [stripeToken, setStripeToken] = useState(null);
-    const {token} = useSelector((state) => state.user);
+    const token = useSelector((state) => state.user?.token);
+    const userId = useSelector((state) => state.user?._id);
+
+    console.log(userId);
+    console.log(token);
 
     const onToken = async (token) => {
         setStripeToken(token);
@@ -87,8 +91,8 @@ const Cart = () => {
            }
        };
 
-// paymentRequest();
-           stripeToken && paymentRequest();
+paymentRequest();
+//            stripeToken && paymentRequest();
    }, [stripeToken, cart.total, dispatch, user.token, user._id]);
 
 console.log(stripeToken)
