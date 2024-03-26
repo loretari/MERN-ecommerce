@@ -59,8 +59,9 @@ const WidgetLg = () => {
                 <div className="widgetLgDate">
                     <span>
                         <b className="widgetLgTh">Quantity: </b>{order.products.quantity}
-                        {order.products.map(product => product.quantity).join(", ")}
-                        </span>
+                        {/*{order.products.map(product => product.quantity).join(", ")}*/}
+                        {order.products.reduce((total, product) => total + product.quantity, 0)}
+                    </span>
                 </div>
                 <div className="widgetLgDate">
                     <span>

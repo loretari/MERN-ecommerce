@@ -20,35 +20,13 @@ const Cart = () => {
     const dispatch = useDispatch();
 
     const [stripeToken, setStripeToken] = useState(null);
-    const token = useSelector((state) => state.user?.token);
-    const userId = useSelector((state) => state.user?._id);
+    const token = useSelector((state) => state.user.token);
 
-    console.log(userId);
-    console.log(token);
+
 
     const onToken = async (token) => {
         setStripeToken(token);
     }
-    //     try {
-    //         const response = await axios.post(`http://localhost:5001/orders`, {
-    //             products: cart.products,
-    //             total: cart.total,
-    //             // total: cart.total,
-    //             // token: stripeToken,
-    //             userId: user._id,
-    //         },
-    //    {
-    //            headers: {
-    //                "Authorization": `Bearer ${token}`
-    //              },
-    //             }
-    //             );
-    //         console.log(response.data);
-    //         dispatch(clearCart());
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
 
 
    useEffect(() => {

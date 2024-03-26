@@ -56,6 +56,10 @@ import { verifyToken, verifyTokenAdmin, verifyTokenAuth } from "../midlewares/ve
   // get one user cart
    cartController.get('/find/:userId', verifyTokenAuth, async (req, res) => {
     try {
+        if (req.params.userId !== req.user.id) {
+            return res.status(403).json({ message: "You are not authorized to access this resource." });
+        }
+
         const cart = await Cart.findOne({userId: req.params.userId});
         return res.status(200).json(cart)
     } catch (error) {
