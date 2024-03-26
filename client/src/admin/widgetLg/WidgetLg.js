@@ -2,13 +2,15 @@ import React, {useEffect, useState} from "react";
 import "./widgetLg.css";
 import { format } from "timeago.js/esm/format";
 import axios from "axios";
+import StripeCheckout from "react-stripe-checkout";
 
 
 const WidgetLg = () => {
 
     const [orders, setOrders] = useState([]);
 
-    console.log(orders);
+    // console.log(orders);
+
 
 
     const Button = ({type}) => {
@@ -28,6 +30,7 @@ const WidgetLg = () => {
        getOrders();
     }, []);
 
+
     return (
         <div className="widgetLg">
             <h3 className="widgetLgTitle">Latest transactions</h3>
@@ -41,7 +44,7 @@ const WidgetLg = () => {
                 {orders
                     .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
                     .map((order)=>(
-                        <div className="widgetLgTr">
+                        <div className="widgetLgTr" key={order._id}>
                             <div className="widgetLgUser">
 
                                 <span className="widgetLgName">{order.userId}</span>
@@ -54,6 +57,8 @@ const WidgetLg = () => {
                         </div>
                     ))}
             </div>
+
+
         </div>
     )
 }

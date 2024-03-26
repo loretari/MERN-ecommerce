@@ -7,22 +7,23 @@ const orderController = express.Router();
 
 // create a new cart (everyone can create that)
 orderController.post('/', async (req, res) => {
-    const order = new Object(req.body);
     try {
-        const newOrder = await order.save();
+        const newOrder = await Order.create(req.body);
         return res.status(200).json(newOrder);
     } catch (error) {
-        return res.status(500).json(error.message)
+        return res.status(500).json({error: "Internal server error. Failed to create order."})
 
     }
 })
 
 // update existing order (only admin can)
 orderController.put('/:id', async (req, res) => {
+
     try {
-        const updatedOrder = await Order.findByIdAndUpdate(req.params.id, {
-            $set: req.body
-        }, {new: true});
+        const updatedOrder = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedOrder) {
+            return res.status(404).json({ message: "Order not found" });
+        }
         return res.status(200).json(updatedOrder);
     } catch (error) {
         return res.status(500).json(error.message)
@@ -32,7 +33,10 @@ orderController.put('/:id', async (req, res) => {
 // delete order
 orderController.delete('/:id', async (req, res) => {
     try {
-        await Order.findByIdAndDelete(req.params.id);
+        const deletedOrder = await Order.findByIdAndDelete(req.params.id);
+        if (!deletedOrder) {
+            return res.status(404).json({ message: "Order not found" }); // Jei užsakymas nerastas, grąžinkite 404 statusą (Not Found)
+        }
         return res.status(200).json("Order successfully deleted!")
 
     } catch (error) {

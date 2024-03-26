@@ -11,9 +11,10 @@ import {clearCart, removeProduct} from "../../redux/cartSlice";
 
 const Cart = () => {
 
-    const stripePKey = "pk_test_51KtMKTKEPl7cx7LLlNeT4ue0O4TTFPRVjhIr5T5Hu7WCK7MYlBx6b4y4esCNs04nym36jIDEmqDTz2c1GVitaWeN009SFpfAkB"
-
+    const stripePKey = "pk_test_51OyH9cIsGEkE0xD4nCXnSdQInI9sZdChNKtanSr4RjpDQcbyqwVtx0SnymUHPwtzjeaFHvWtxxPWV7FDDowbVUxy00wpiRgNWy"
     const cart = useSelector((state) => state.cart);
+    const [product, setProduct] = useState({});
+    const [quantity, setQuantity] = useState(1);
     const user  = useSelector((state) => state.user.currentUser);
 
     const dispatch = useDispatch();
@@ -23,40 +24,72 @@ const Cart = () => {
 
     const onToken = async (token) => {
         setStripeToken(token);
-
-        try {
-            const response = await axios.post(`http://localhost:5001/orders`, {
-                products: cart.products,
-                total: cart.total,
-                token: token,
-                userId: user._id,
-            })
-            console.log(response);
-        } catch (error) {
-            console.error(error);
-        }
-
     }
-
+    //     try {
+    //         const response = await axios.post(`http://localhost:5001/orders`, {
+    //             products: cart.products,
+    //             total: cart.total,
+    //             // total: cart.total,
+    //             // token: stripeToken,
+    //             userId: user._id,
+    //         },
+    //    {
+    //            headers: {
+    //                "Authorization": `Bearer ${token}`
+    //              },
+    //             }
+    //             );
+    //         console.log(response.data);
+    //         dispatch(clearCart());
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
 
 
    useEffect(() => {
        const paymentRequest = async () => {
-           try {
-             const res = await axios.post(`http"//localhost:5001/products`, {
-                 headers: {
-                    "Authorization": `Bearer ${token}`
-                 },
-             })
-             console.log(res);
+           if (stripeToken) {
+               try {
 
-           } catch (error) {
-               console.error(error);
+                   const orderData = {
+                       products: cart.products.map((product) => ({
+                           _id: product._id,
+                           title: product.title,
+                           description: product.description,
+                           categories: product.categories,
+                           price: product.price,
+                           image: product.image,
+                           inStock: product.inStock,
+                           createdAt: product.createdAt,
+                           updatedAt: product.updatedAt,
+                           __v: product.__v,
+                           quantity: product.quantity,
+                       })),
+                       address: "your_address_here",
+                       amount: cart.total,
+                       userId: user._id,
+
+                   }
+                   const res = await axios.post("http://localhost:5001/orders",
+                       orderData,
+                       {
+                       headers: {
+                           "Authorization": `Bearer ${user.token}`
+                       },
+                   })
+                   console.log(res.data);
+                   dispatch(clearCart());
+
+               } catch (error) {
+                   console.error(error);
+               }
            }
-           stripeToken && paymentRequest();
+       };
 
-       }
-   }, [stripeToken, cart.total])
+// paymentRequest();
+           stripeToken && paymentRequest();
+   }, [stripeToken, cart.total, dispatch, user.token, user._id]);
 
 console.log(stripeToken)
 
@@ -157,7 +190,6 @@ console.log(stripeToken)
                                 {user? (
                                         <StripeCheckout
                                             name="LorDesIgn"
-
                                             billingAddress
                                             shippingAddress
                                             description={`Your total is $${cart.total}`}
@@ -166,9 +198,9 @@ console.log(stripeToken)
                                             stripeKey={stripePKey}
                                         >
                                             <button className="cart-button">CHECKOUT NOW</button>
-                                        </StripeCheckout>)
+                                        </StripeCheckout>
+                                    )  : (
                                     // <Success />
-                                    : (
                                         <Link to= "/login">
                                             <button>LOG IN TO CHECKOUT </button>
                                         </Link>

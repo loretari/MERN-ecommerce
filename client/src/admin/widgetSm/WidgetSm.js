@@ -7,23 +7,9 @@ const WidgetSm = () => {
 
     const [users, setUsers] = useState([]);
 
-console.log(users);
+    // console.log(users);
 
-    const uniqueIds = new Set();
 
-    users.forEach(user => {
-        if (user._id) {
-            if (uniqueIds.has(user._id)) {
-                console.error(`Duplicate id found: ${user._id}`);
-            } else {
-                uniqueIds.add(user._id);
-            }
-        } else {
-            console.error(`User object has undefined id: ${JSON.stringify(user)}`);
-        }
-    });
-
-    console.log("All ids are unique.");
 
     useEffect(() => {
          const getUsers = async () => {

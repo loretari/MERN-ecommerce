@@ -15,16 +15,33 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
          addProduct: (state, action) => {
-             state.quantity += 1;
-             state.products.push(action.payload);
-             localStorage.setItem('cart', state.quantity)
+             const { _id, title, price, quantity } = action.payload;
+             state.quantity += quantity;
+             state.total += price * quantity;
 
-             state.total += action.payload.price * action.payload.quantity;
-             toast.success(`${action.payload.quantity} ${action.payload.title} added to cart!`, {
-                 position: "bottom-left"
-             });
+             const existingProductIndex = state.products.findIndex(product => product._id === _id);
+             if (existingProductIndex !== -1) {
+                 state.products[existingProductIndex].quantity += quantity;
+             } else {
+                 state.products.push(action.payload);
+             }
 
              localStorage.setItem("cartItems", JSON.stringify(state.products));
+
+           
+             toast.success(`${quantity} ${title} added to cart!`, {
+                 position: "bottom-left"
+             });
+             // state.quantity += 1;
+             // state.products.push(action.payload);
+             // localStorage.setItem('cart', state.quantity)
+             //
+             // state.total += action.payload.price * action.payload.quantity;
+             // toast.success(`${action.payload.quantity} ${action.payload.title} added to cart!`, {
+             //     position: "bottom-left"
+             // });
+             //
+             // localStorage.setItem("cartItems", JSON.stringify(state.products));
 
          },
 

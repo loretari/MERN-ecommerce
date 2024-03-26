@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './App.css';
 import Homepage from "./pages/Homepage";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
@@ -24,11 +24,17 @@ import NewEmployee from "./admin/newEmployee/NewEmployee";
 import AdminItems from "./admin/adminItems/AdminItems";
 import AdminItem from "./admin/adminItem/AdminItem";
 import NewItem from "./admin/newItem/NewItem";
+import CookieConsent from "./cookieConsent/CookieConsent";
 
 
 
 
 function App() {
+
+    useEffect(() => {
+        localStorage.setItem('cookieConsent', 'true');
+    }, []);
+
 
   return (
       <BrowserRouter>
@@ -66,8 +72,8 @@ function App() {
                     </main>
                 }
             />
-
         </Routes>
+          <CookieConsent />
       </BrowserRouter>
 
   );
