@@ -36,9 +36,6 @@ export const itemSlice = createSlice({
         },
         deleteItemSuccess: (state, action) => {
             state.isFetching = false
-            //we remove the Item whose id matches with our specific Item
-            // state.items = state.items.filter(item => item._id !== action.payload);
-
             state.items.splice(
                 state.items.findIndex((item) => item._id === action.payload),1
             )
@@ -61,10 +58,6 @@ export const itemSlice = createSlice({
                 }
                 return item;
             })
-
-
-            // state.items[
-            //     state.items.findIndex((item) => item._id === action.payload.id)] = action.payload.item
 
         },
         updateItemFailure: (state) => {

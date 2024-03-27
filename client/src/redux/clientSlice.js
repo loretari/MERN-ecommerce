@@ -60,9 +60,6 @@ export const clientSlice = createSlice({
 
 
 
-            // state.clients[
-            //     state.clients.findIndex((item) => item._id === action.payload.id)] = action.payload.client
-
         },
         updateClientFailure: (state) => {
             state.isFetching = false
@@ -75,10 +72,7 @@ export const clientSlice = createSlice({
         },
         addClientSuccess: (state, action) => {
             state.isFetching = false
-            // state.currentUser = action.payload.others
             state.clients.push(action.payload)
-            // localStorage.setItem('user', JSON.stringify(state.currentUser.username));
-            // window.location.assign('/');
 
         },
         addClientFailure: (state) => {

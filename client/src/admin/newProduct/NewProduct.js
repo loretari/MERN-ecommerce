@@ -37,9 +37,7 @@ const NewProduct = () => {
         reader.readAsDataURL(file)
     }
 
-    const handleCloseImg = () => {
-        setImage('');
-    }
+
 
     const handleClick = async (e) => {
         e.preventDefault();

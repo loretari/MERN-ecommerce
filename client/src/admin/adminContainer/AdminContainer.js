@@ -17,9 +17,7 @@ const AdminContainer = () => {
         if (currentPage === 'AdminProducts') {
           return <AdminProducts/>
         }
-        // if (currentPage === 'AdminUsers') {
-        //     return <AdminUsers/>
-        // }
+
         if (currentPage === 'AdminEmployees') {
             return <AdminEmployees/>
         }

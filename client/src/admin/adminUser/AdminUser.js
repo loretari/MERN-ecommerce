@@ -97,12 +97,6 @@ const handleSubmit = async (e) => {
                         </div>
                     </div>
 
-
-                    {/*<div className= "userShowTop">*/}
-                        {/*<div className= "userShowTopTitle">*/}
-                        {/*    <span className= "userShowUsername">{updatedUser.username} </span>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
                     <div className= "userShowBottom">
                         <span className= "userShowTitle">Created at: </span>
                         <div className= "userShowInfo">

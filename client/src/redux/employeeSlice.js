@@ -57,9 +57,6 @@ export const employeeSlice = createSlice({
                 return employee;
             })
 
-            // state.employees[
-            //     state.employees.findIndex((item) => item._id === action.payload.id)] = action.payload.Employee
-
         },
         updateEmployeeFailure: (state) => {
             state.isFetching = false
