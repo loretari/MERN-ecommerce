@@ -31,17 +31,19 @@ const AdminLogin = () => {
             });
             if (res.ok) {
                 const data = await res.json();
-                console.log(data);
-                dispatch(adminLoginSuccess(data))
-                navigate("/admin/home");
+                if (data.isAdmin) {
+                    console.log(data);
+                    dispatch(adminLoginSuccess(data))
+                    navigate("/admin/home");
+                } else {
+                    throw new Error("You are not authorized to login as admin")
+                }
             } else {
                 throw new Error("Authentication failed")
             }
-
-
         } catch (error) {
             setTimeout(() => {
-                // setError(true)
+                setError(true)
             }, 3000)
         }
 

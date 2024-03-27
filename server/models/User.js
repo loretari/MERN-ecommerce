@@ -29,6 +29,16 @@ const UserSchema = new mongoose.Schema({
 },
     //createdAt
     {timestamps: true}
-)
+);
+
+UserSchema.pre('save', async function (next) {
+    if (this.isAdmin) {
+        const existingAdmin = await this.constructor.findOne({isAdmin: true});
+        if (existingAdmin && !existingAdmin._id.equals(this._id)) {
+            throw new Error("Only one admin could be");
+        }
+    }
+    next();
+})
 
 export const User = mongoose.model("User", UserSchema);

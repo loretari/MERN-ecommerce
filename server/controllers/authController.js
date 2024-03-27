@@ -30,8 +30,14 @@ authController.post('/register', async (req, res) => {
 authController.post('/login', async (req, res) => {
     try {
       const user = await User.findOne({
-          email: req.body.email,
-          username: req.body.username,
+
+          $or: [
+              { email: req.body.email },
+              { username: req.body.username }
+          ]
+
+          // email: req.body.email,
+          // username: req.body.username,
       })
         if (!user) {
             return res.status(401).json("No user existing with that username")
