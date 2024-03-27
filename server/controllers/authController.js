@@ -81,7 +81,7 @@ authController.post('/google', async (req, res) => {
             });
 
             await newUser.save();
-            const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
+            const token = jwt.sign({id: newUser._id}, process.env.JWT_SECRET);
             const {password, ...others} = newUser._doc;
             return res.cookie('access_token', token, {httpOnly: true}).status(200).json({...others, token});
 

@@ -42,12 +42,6 @@ const WidgetSm = () => {
                             <span className="widgetSmUserTitle" key={`${user._id}_email`}>Mail: {user.email}</span>
                             <span className="widgetSmUserTitle" key={`${user._id}_createdAt`}>First Access: {user.createdAt}</span>
 
-                    {/*<li className="widgetSmListItem" key={`${user.id}_item`}>*/}
-
-                    {/*    <div className="widgetSmUser">*/}
-                    {/*        <span className="widgetSmUsername">Name: {user.username}</span>*/}
-                    {/*        <span className="widgetSmUserTitle">Mail: {user.email}</span>*/}
-                    {/*        <span className="widgetSmUserTitle">First Access: {user.createdAt}</span>*/}
                         </div>
                     </li>
                 ))}
