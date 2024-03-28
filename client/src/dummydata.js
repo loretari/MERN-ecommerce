@@ -1,5 +1,5 @@
 import Fashion1 from "./Assets/fashion14.1.jpg";
-import Fashion2 from "./Assets/fashion19.jpg";
+import Fashion2 from "./Assets/fashion29.jpg";
 import Fashion3 from "./Assets/fashion7.1.jpg";
 import Fashion4 from "./Assets/fashion5.jpg";
 import Fashion5 from "./Assets/fashion6.jpg";
@@ -7,6 +7,7 @@ import Fashion6 from "./Assets/fashion11.jpg";
 import Fashion7 from "./Assets/fashion28.jpg";
 import Fashion8 from "./Assets/fashion25.jpg";
 import Fashion9 from "./Assets/fashion23.jpg";
+
 
 export const sliderItems = [
     {

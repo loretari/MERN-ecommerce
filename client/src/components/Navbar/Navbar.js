@@ -57,8 +57,6 @@ const Navbar = () => {
 
     return(
         <div className= {`${"navbar-container"} ${isScrolled && "scrolled"}`}>
-
-            <div className= "navbar-wrapper">
                 <div className= "navbar-center">
                     <Link className= "navbar-title"
                           onClick={() => window.scrollTo(0, 0)}
@@ -134,7 +132,6 @@ const Navbar = () => {
 
 
                 </div>
-            </div>
         </div>
 
 
